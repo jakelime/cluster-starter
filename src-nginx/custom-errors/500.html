@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>500 - Internal Server Error</title>
+    <style>
+        :root {
+            /* Light Mode Variables */
+            --bg-color: #f8f9fa;
+            --wheel-color: #333333; /* Darker for contrast */
+            --stand-color: #2c3e50;
+            --hamster-color: #f0c986;
+            --hamster-ear: #deaa68;
+            --text-color: #4a4a4a;
+            --headline-color: #1a1a1a;
+            --accent-color: #e74c3c; /* A sharper red/orange */
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            background-color: var(--bg-color);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            overflow: hidden;
+            color: var(--text-color);
+        }
+
+        .container {
+            text-align: center;
+            position: relative;
+            z-index: 10;
+        }
+
+        h1 {
+            font-size: 9rem; /* Slightly larger */
+            margin: 0;
+            line-height: 1;
+            font-weight: 900;
+            letter-spacing: -5px;
+            color: var(--headline-color);
+            /* High contrast hard shadow */
+            text-shadow: 4px 4px 0px rgba(0,0,0,0.2); 
+        }
+
+        h2 {
+            font-size: 2rem;
+            margin: 10px 0 20px 0;
+            color: var(--accent-color);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-weight: 800;
+        }
+
+        p {
+            font-size: 1.2rem;
+            color: #666;
+            margin-bottom: 30px;
+            max-width: 450px;
+            margin-left: auto;
+            margin-right: auto;
+            line-height: 1.5;
+        }
+
+        .btn {
+            padding: 14px 35px;
+            background-color: var(--headline-color);
+            color: #fff;
+            text-decoration: none;
+            border-radius: 5px; /* Boxier button for contrast */
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: all 0.2s ease;
+            display: inline-block;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            background-color: var(--accent-color);
+            box-shadow: 0 6px 12px rgba(231, 76, 60, 0.3);
+        }
+
+        /* --- SVG STYLING --- */
+        .scene {
+            width: 300px;
+            height: 300px;
+            margin: 0 auto 10px;
+        }
+
+        /* The Wheel Rotation */
+        .wheel-group {
+            transform-origin: 150px 150px;
+            animation: spin 4s linear infinite;
+        }
+
+        /* The Hamster Container */
+        .hamster-container {
+            transform-origin: 150px 150px;
+            animation: hamster-drama 4s linear infinite;
+        }
+
+        /* The Hamster Body */
+        .hamster-body {
+            transform-origin: 150px 235px;
+            animation: run-cycle 0.2s linear infinite;
+        }
+
+        .wheel-rim {
+            stroke: var(--wheel-color);
+            stroke-width: 10;
+        }
+
+        .wheel-rim-inner {
+            stroke: #ccc;
+            stroke-width: 2;
+            stroke-dasharray: 10 10;
+        }
+
+        .spoke {
+            stroke: var(--wheel-color);
+            stroke-width: 5;
+            stroke-linecap: round;
+        }
+
+        .stand {
+            fill: var(--stand-color);
+        }
+
+        /* --- ANIMATIONS --- */
+        @keyframes spin {
+            100% { transform: rotate(360deg); }
+        }
+
+        @keyframes hamster-drama {
+            0% { transform: rotate(0deg); }
+            45% { transform: rotate(0deg); }
+            55% { transform: rotate(25deg); } 
+            65% { transform: rotate(-20deg); } 
+            75% { transform: rotate(190deg); } 
+            85% { transform: rotate(340deg); } 
+            95% { transform: rotate(360deg); } 
+            100% { transform: rotate(360deg); }
+        }
+
+        @keyframes run-cycle {
+            0% { transform: translateY(0) scaleY(1); }
+            50% { transform: translateY(-2px) scaleY(1.02); }
+            100% { transform: translateY(0) scaleY(1); }
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        
+        <div class="scene">
+            <svg viewBox="0 0 300 300" xmlns="http://www.w3.org/2000/svg">
+                <path d="M100,280 L200,280 L180,220 L120,220 Z" class="stand"/>
+                <rect x="145" y="220" width="10" height="60" class="stand"/>
+                
+                <g class="wheel-group">
+                    <circle cx="150" cy="150" r="90" fill="none" class="wheel-rim"/>
+                    <circle cx="150" cy="150" r="95" fill="none" class="wheel-rim-inner" opacity="0.6"/>
+                    
+                    <line x1="150" y1="60" x2="150" y2="240" class="spoke"/>
+                    <line x1="60" y1="150" x2="240" y2="150" class="spoke"/>
+                    <line x1="86" y1="86" x2="214" y2="214" class="spoke"/>
+                    <line x1="214" y1="86" x2="86" y2="214" class="spoke"/>
+                </g>
+
+                <g class="hamster-container">
+                    <g class="hamster-body">
+                        <ellipse cx="150" cy="225" rx="25" ry="18" fill="#f0c986"/>
+                        <circle cx="135" cy="210" r="6" fill="#deaa68"/>
+                        <circle cx="165" cy="210" r="6" fill="#deaa68"/>
+                        <circle cx="140" cy="218" r="3" fill="#000"/>
+                        <circle cx="160" cy="218" r="3" fill="#000"/>
+                        <ellipse cx="150" cy="225" rx="8" ry="6" fill="#fff" opacity="0.6"/>
+                        <path d="M148,225 Q150,228 152,225" stroke="#000" stroke-width="1" fill="none"/>
+                        <ellipse cx="140" cy="242" rx="5" ry="3" fill="#deaa68"/>
+                        <ellipse cx="160" cy="242" rx="5" ry="3" fill="#deaa68"/>
+                    </g>
+                </g>
+            </svg>
+        </div>
+
+        <h1>500</h1>
+        <h2>Internal Server Error</h2>
+        <p>Our server hamster has decided to go for a spin... literally. We're sending in a rescue team with fresh sunflower seeds.</p>
+        
+        <a href="/" class="btn">Reload Page</a>
+    </div>
+
+</body>
+</html>

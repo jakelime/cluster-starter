@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>502 - Bad Gateway</title>
+    <style>
+        :root {
+            --bg-color: #f8f9fa;
+            --text-color: #4a4a4a;
+            --headline-color: #1a1a1a;
+            --accent-color: #e74c3c;
+            --plug-color: #2c3e50;
+            --cord-color: #34495e;
+            --socket-color: #bdc3c7;
+            --spark-color: #f1c40f;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            background-color: var(--bg-color);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            overflow: hidden;
+            color: var(--text-color);
+        }
+
+        .container {
+            text-align: center;
+            position: relative;
+            z-index: 10;
+        }
+
+        h1 {
+            font-size: 9rem;
+            margin: 0;
+            line-height: 1;
+            font-weight: 900;
+            letter-spacing: -5px;
+            color: var(--headline-color);
+            text-shadow: 4px 4px 0px rgba(0,0,0,0.15);
+        }
+
+        h2 {
+            font-size: 2rem;
+            margin: 10px 0 20px 0;
+            color: var(--accent-color);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-weight: 800;
+        }
+
+        p {
+            font-size: 1.2rem;
+            color: #555;
+            margin-bottom: 30px;
+            max-width: 480px;
+            margin-left: auto;
+            margin-right: auto;
+            line-height: 1.5;
+        }
+
+        .btn {
+            padding: 14px 35px;
+            background-color: var(--headline-color);
+            color: #fff;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: all 0.2s ease;
+            display: inline-block;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            background-color: var(--accent-color);
+            box-shadow: 0 6px 12px rgba(231, 76, 60, 0.3);
+        }
+
+        /* --- SVG STYLING --- */
+        .scene {
+            width: 400px;
+            height: 300px;
+            margin: 0 auto 10px;
+            overflow: visible;
+        }
+
+        /* The Hanging Plug */
+        .plug-group {
+            transform-origin: 200px -50px; /* Swing from ceiling */
+            animation: swing-plug 3s ease-in-out infinite;
+        }
+
+        /* The Socket on the Wall */
+        .socket-group {
+            transform-origin: 200px 200px;
+            animation: dodge-socket 3s ease-in-out infinite;
+        }
+
+        /* Sparks when they almost touch */
+        .sparks {
+            opacity: 0;
+            animation: spark-flash 3s ease-in-out infinite;
+        }
+
+        /* Facial Expressions */
+        .eye {
+            fill: #fff;
+        }
+        .pupil {
+            fill: #000;
+        }
+
+        /* --- ANIMATIONS --- */
+
+        /* The Plug tries to swing into the center */
+        @keyframes swing-plug {
+            0% { transform: rotate(-25deg); }
+            50% { transform: rotate(25deg); }
+            100% { transform: rotate(-25deg); }
+        }
+
+        /* The Socket realizes the plug is coming and jumps away */
+        @keyframes dodge-socket {
+            0% { transform: translateX(0); }
+            20% { transform: translateX(0); }
+            25% { transform: translateX(60px) rotate(10deg); } /* Jumps Right */
+            45% { transform: translateX(60px) rotate(10deg); }
+            
+            55% { transform: translateX(-60px) rotate(-10deg); } /* Jumps Left */
+            75% { transform: translateX(-60px) rotate(-10deg); }
+            
+            85% { transform: translateX(0); } /* Returns to center */
+            100% { transform: translateX(0); }
+        }
+
+        /* Flash of frustration/sparks when they miss */
+        @keyframes spark-flash {
+            0%, 20%, 30%, 100% { opacity: 0; }
+            25% { opacity: 1; } /* Flash when socket jumps right */
+            75% { opacity: 1; } /* Flash when socket jumps left */
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        
+        <div class="scene">
+            <svg viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg">
+                
+                <g class="socket-group">
+                    <rect x="160" y="180" width="80" height="80" rx="15" fill="#e0e0e0" stroke="#2c3e50" stroke-width="4"/>
+                    
+                    <rect x="175" y="200" width="15" height="25" rx="4" fill="#2c3e50"/>
+                    <rect x="210" y="200" width="15" height="25" rx="4" fill="#2c3e50"/>
+                    
+                    <circle cx="200" cy="240" r="8" fill="#2c3e50"/>
+
+                    <path d="M250,190 Q250,185 253,190 Q256,195 250,200 Z" fill="#3498db" opacity="0.8"/>
+                </g>
+
+                <g class="sparks">
+                    <path d="M190,160 L200,140 L210,160 Z" fill="#f1c40f"/>
+                    <path d="M180,150 L170,130 L190,140 Z" fill="#f1c40f"/>
+                    <path d="M220,150 L230,130 L210,140 Z" fill="#f1c40f"/>
+                </g>
+
+                <g class="plug-group">
+                    <path d="M200,-50 L200,120" stroke="#2c3e50" stroke-width="8" fill="none"/>
+                    
+                    <path d="M170,120 L230,120 L220,170 L180,170 Z" fill="#2c3e50"/>
+                    
+                    <rect x="185" y="170" width="10" height="20" fill="#2c3e50" rx="2"/>
+                    <rect x="205" y="170" width="10" height="20" fill="#2c3e50" rx="2"/>
+
+                    <circle cx="190" cy="145" r="5" fill="#fff"/>
+                    <circle cx="210" cy="145" r="5" fill="#fff"/>
+                    <line x1="185" y1="138" x2="195" y2="142" stroke="#fff" stroke-width="2"/>
+                    <line x1="215" y1="138" x2="205" y2="142" stroke="#fff" stroke-width="2"/>
+                </g>
+
+            </svg>
+        </div>
+
+        <h1>502</h1>
+        <h2>Bad Gateway</h2>
+        <p>There was a miscommunication between servers. We tried to connect, but the upstream server seems to be dodging our requests.</p>
+        
+        <a href="/" class="btn">Attempt Connection Again</a>
+    </div>
+
+</body>
+</html>

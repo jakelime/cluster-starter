@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>504 - Gateway Timeout</title>
+    <style>
+        :root {
+            --bg-color: #f8f9fa;
+            --text-color: #4a4a4a;
+            --headline-color: #1a1a1a;
+            --accent-color: #e74c3c;
+            --snail-body: #8ac98a;
+            --snail-shell: #ff8e72;
+            --road-color: #d1d1d1;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            background-color: var(--bg-color);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            overflow: hidden;
+            color: var(--text-color);
+        }
+
+        .container {
+            text-align: center;
+            position: relative;
+            z-index: 10;
+        }
+
+        h1 {
+            font-size: 9rem;
+            margin: 0;
+            line-height: 1;
+            font-weight: 900;
+            letter-spacing: -5px;
+            color: var(--headline-color);
+            text-shadow: 4px 4px 0px rgba(0,0,0,0.15);
+        }
+
+        h2 {
+            font-size: 2rem;
+            margin: 10px 0 20px 0;
+            color: var(--accent-color);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-weight: 800;
+        }
+
+        p {
+            font-size: 1.2rem;
+            color: #555;
+            margin-bottom: 30px;
+            max-width: 480px;
+            margin-left: auto;
+            margin-right: auto;
+            line-height: 1.5;
+        }
+
+        .btn {
+            padding: 14px 35px;
+            background-color: var(--headline-color);
+            color: #fff;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: all 0.2s ease;
+            display: inline-block;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            background-color: var(--accent-color);
+            box-shadow: 0 6px 12px rgba(231, 76, 60, 0.3);
+        }
+
+        /* --- SVG STYLING --- */
+        .scene {
+            width: 400px;
+            height: 250px;
+            margin: 0 auto 10px;
+            overflow: hidden; /* Hide snail when it loops */
+            position: relative;
+        }
+
+        /* The Snail Group */
+        .snail-group {
+            animation: crawl-across 8s linear infinite;
+        }
+
+        /* The Snail Shell - Rocks back and forth */
+        .snail-shell {
+            transform-origin: 160px 180px;
+            animation: shell-rock 1s ease-in-out infinite alternate;
+        }
+
+        /* The Snail Body - Squashes and stretches to simulate inching */
+        .snail-body {
+            transform-origin: 150px 200px;
+            animation: body-inch 2s ease-in-out infinite;
+        }
+
+        /* The Eyes - Look around nervously */
+        .snail-eyes {
+            transform-origin: 210px 150px;
+            animation: eye-bob 2s ease-in-out infinite;
+        }
+
+        /* Sweat drops - Because he's trying hard */
+        .sweat {
+            opacity: 0;
+            animation: sweat-drop 2s linear infinite;
+        }
+        .sweat-1 { animation-delay: 0.5s; }
+        .sweat-2 { animation-delay: 1.5s; }
+
+        /* Speed lines - Irony */
+        .speed-line {
+            stroke: #ccc;
+            stroke-width: 2;
+            stroke-linecap: round;
+            opacity: 0;
+            animation: wind 1s linear infinite;
+        }
+
+        /* --- ANIMATIONS --- */
+        
+        /* Moves the snail across the screen */
+        @keyframes crawl-across {
+            0% { transform: translateX(-150px); }
+            100% { transform: translateX(350px); }
+        }
+
+        /* Simulates muscle movement */
+        @keyframes body-inch {
+            0% { transform: scaleX(1); }
+            50% { transform: scaleX(1.1) scaleY(0.9); }
+            100% { transform: scaleX(1); }
+        }
+
+        /* Heavy breathing/rocking */
+        @keyframes shell-rock {
+            0% { transform: rotate(-5deg) translateY(0); }
+            100% { transform: rotate(5deg) translateY(2px); }
+        }
+
+        @keyframes eye-bob {
+            0%, 100% { transform: rotate(0deg); }
+            50% { transform: rotate(-10deg) translateX(-2px); }
+        }
+
+        @keyframes sweat-drop {
+            0% { opacity: 1; transform: translateY(0); }
+            100% { opacity: 0; transform: translateY(20px); }
+        }
+
+        @keyframes wind {
+            0% { transform: translateX(0); opacity: 0; }
+            50% { opacity: 1; }
+            100% { transform: translateX(-40px); opacity: 0; }
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        
+        <div class="scene">
+            <svg viewBox="0 0 400 250" xmlns="http://www.w3.org/2000/svg">
+                <line x1="0" y1="210" x2="400" y2="210" stroke="#d1d1d1" stroke-width="4" stroke-linecap="round"/>
+                
+                <line x1="100" y1="120" x2="140" y2="120" class="speed-line" style="animation-delay: 0s;"/>
+                <line x1="80" y1="180" x2="120" y2="180" class="speed-line" style="animation-delay: 0.3s;"/>
+
+                <g class="snail-group">
+                    
+                    <path d="M120,210 C120,210 100,210 90,205 C80,200 120,190 150,190 C200,190 220,200 230,205 C240,210 220,210 220,210 H120 Z" fill="#8ac98a" class="snail-body"/>
+                    
+                    <g class="snail-shell">
+                        <circle cx="160" cy="170" r="35" fill="#ff8e72" stroke="#e74c3c" stroke-width="3"/>
+                        <path d="M160,170 m-20,0 a20,20 0 1,0 40,0 a20,20 0 1,0 -40,0" fill="none" stroke="#e74c3c" stroke-width="2" opacity="0.6"/>
+                        <path d="M160,170 m-10,0 a10,10 0 1,0 20,0 a10,10 0 1,0 -20,0" fill="none" stroke="#e74c3c" stroke-width="2" opacity="0.6"/>
+                        <circle cx="160" cy="170" r="15" fill="#fff"/>
+                        <text x="160" y="174" font-size="12" font-weight="bold" fill="#333" text-anchor="middle" font-family="Arial">504</text>
+                    </g>
+
+                    <g class="snail-eyes">
+                        <path d="M210,195 Q215,170 205,150" stroke="#8ac98a" stroke-width="4" fill="none"/>
+                        <path d="M215,195 Q225,170 225,150" stroke="#8ac98a" stroke-width="4" fill="none"/>
+                        <circle cx="205" cy="150" r="8" fill="#fff" stroke="#8ac98a" stroke-width="2"/>
+                        <circle cx="205" cy="150" r="2" fill="#000"/>
+                        <circle cx="225" cy="150" r="8" fill="#fff" stroke="#8ac98a" stroke-width="2"/>
+                        <circle cx="225" cy="150" r="2" fill="#000"/>
+                        <rect x="200" y="140" width="30" height="6" fill="#e74c3c" rx="2" transform="rotate(-10 215 145)"/>
+                    </g>
+
+                    <g fill="#4facfe">
+                        <path d="M190,130 Q190,125 193,130 Q196,135 190,140 Z" class="sweat sweat-1"/>
+                        <path d="M170,140 Q170,135 173,140 Q176,145 170,150 Z" class="sweat sweat-2"/>
+                    </g>
+
+                </g>
+            </svg>
+        </div>
+
+        <h1>504</h1>
+        <h2>Gateway Timeout</h2>
+        <p>The server waited for a response, but it never came. Our high-speed carrier snail is doing his best, but the data packet was heavier than expected.</p>
+        
+        <a href="/" class="btn">Give Him Another Chance (Reload)</a>
+    </div>
+
+</body>
+</html>

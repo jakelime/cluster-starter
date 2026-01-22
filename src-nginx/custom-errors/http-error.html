@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Secure Connection Failed</title>
+    <style>
+      :root {
+        --bg-color: #f8f9fa;
+        --text-color: #4a4a4a;
+        --headline-color: #1a1a1a;
+        --accent-red: #e74c3c; /* For HTTP/Error */
+        --accent-green: #27ae60; /* For HTTPS/Secure */
+        --cliff-color: #34495e;
+        --bridge-color: #7f8c8d;
+      }
+
+      body {
+        margin: 0;
+        padding: 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        min-height: 100vh; /* Changed to min-height for better scrolling if needed */
+        background-color: var(--bg-color);
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        color: var(--text-color);
+      }
+
+      .container {
+        text-align: center;
+        position: relative;
+        z-index: 10;
+        padding: 20px;
+        max-width: 600px;
+      }
+
+      h1 {
+        font-size: 7rem;
+        margin: 0;
+        line-height: 1;
+        font-weight: 900;
+        color: var(--headline-color);
+        letter-spacing: -3px;
+      }
+
+      h2 {
+        font-size: 2rem;
+        margin: 10px 0 20px 0;
+        color: var(--accent-red);
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        font-weight: 800;
+      }
+
+      p {
+        font-size: 1.1rem;
+        line-height: 1.6;
+        margin-bottom: 25px;
+      }
+
+      /* --- The Specific HTTPS Info Box --- */
+      .info-box {
+        background-color: #fff;
+        border-left: 6px solid var(--accent-red);
+        padding: 20px;
+        text-align: left;
+        border-radius: 8px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        margin-bottom: 30px;
+        position: relative;
+      }
+
+      .info-box h3 {
+        margin: 0 0 10px 0;
+        color: var(--headline-color);
+        display: flex;
+        align-items: center;
+      }
+
+      .info-title-icon {
+        margin-right: 10px;
+        fill: var(--accent-red);
+      }
+
+      .info-box p {
+        margin: 0;
+        font-size: 1rem;
+        color: #666;
+      }
+
+      .highlight-http {
+        font-family: monospace;
+        background-color: #fee;
+        padding: 2px 6px;
+        border-radius: 4px;
+        color: var(--accent-red);
+        font-weight: bold;
+      }
+      .highlight-https {
+        font-family: monospace;
+        background-color: #e8f8f5;
+        padding: 2px 6px;
+        border-radius: 4px;
+        color: var(--accent-green);
+        font-weight: bold;
+      }
+
+      .btn {
+        padding: 14px 35px;
+        background-color: var(--headline-color);
+        color: #fff;
+        text-decoration: none;
+        border-radius: 5px;
+        font-weight: bold;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        transition: all 0.2s ease;
+        display: inline-block;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      }
+
+      .btn:hover {
+        transform: translateY(-2px);
+        background-color: var(--accent-green);
+        box-shadow: 0 6px 12px rgba(39, 174, 96, 0.3);
+      }
+
+      /* --- SVG STYLING --- */
+      .scene {
+        width: 500px;
+        height: 220px;
+        margin: 0 auto 20px;
+        overflow: visible;
+      }
+
+      .cliff {
+        fill: var(--cliff-color);
+      }
+      .platform-label {
+        font-weight: bold;
+        font-family: monospace;
+      }
+      .label-http {
+        fill: var(--accent-red);
+      }
+      .label-https {
+        fill: var(--accent-green);
+      }
+
+      /* The Data Packet Character */
+      .packet-group {
+        transform-origin: 140px 135px;
+        animation: packet-shiver 4s linear infinite;
+      }
+      .packet-body {
+        fill: #ecf0f1;
+        stroke: var(--accent-red);
+        stroke-width: 3;
+      }
+      .packet-face {
+        fill: var(--headline-color);
+      }
+
+      /* The Broken Bridge */
+      .bridge-rope {
+        fill: none;
+        stroke: var(--bridge-color);
+        stroke-width: 4;
+        stroke-linecap: round;
+      }
+      .bridge-left {
+        animation: snap-left 4s ease-in-out infinite;
+        transform-origin: 160px 140px;
+      }
+      .bridge-right {
+        animation: snap-right 4s ease-in-out infinite;
+        transform-origin: 340px 140px;
+      }
+
+      /* The Secure Padlock */
+      .padlock-group {
+        transform-origin: 420px 90px;
+        animation: pulse-secure 2s ease-in-out infinite alternate;
+      }
+
+      /* Sparks indicating failure */
+      .sparks {
+        stroke: var(--accent-red);
+        stroke-width: 3;
+        opacity: 0;
+        animation: spark-flash 4s ease-in-out infinite;
+      }
+
+      /* --- ANIMATIONS --- */
+
+      @keyframes snap-left {
+        0%,
+        40% {
+          transform: rotate(0deg);
+        } /* Holding */
+        45% {
+          transform: rotate(70deg);
+        } /* Snapped down */
+        90% {
+          transform: rotate(70deg);
+        }
+        100% {
+          transform: rotate(0deg);
+        } /* Reset */
+      }
+      @keyframes snap-right {
+        0%,
+        40% {
+          transform: rotate(0deg);
+        }
+        45% {
+          transform: rotate(-70deg);
+        }
+        90% {
+          transform: rotate(-70deg);
+        }
+        100% {
+          transform: rotate(0deg);
+        }
+      }
+
+      @keyframes spark-flash {
+        0%,
+        35%,
+        50%,
+        100% {
+          opacity: 0;
+        }
+        40% {
+          opacity: 1;
+        } /* Flash right when bridge snaps */
+      }
+
+      @keyframes packet-shiver {
+        0%,
+        35% {
+          transform: translate(0, 0);
+        } /* Waiting */
+        40% {
+          transform: translate(-5px, 0) rotate(-10deg);
+        } /* Recoil from snap */
+        42% {
+          transform: translate(-3px, 0) rotate(-5deg);
+        }
+        44% {
+          transform: translate(-5px, 0) rotate(-10deg);
+        }
+        50% {
+          transform: translate(0, 0) rotate(0deg);
+        } /* Recover */
+      }
+
+      @keyframes pulse-secure {
+        0% {
+          transform: scale(1);
+          filter: drop-shadow(0 0 5px var(--accent-green));
+        }
+        100% {
+          transform: scale(1.1);
+          filter: drop-shadow(0 0 15px var(--accent-green));
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="scene">
+        <svg viewBox="0 0 500 220" xmlns="http://www.w3.org/2000/svg">
+          <path d="M0,220 L180,220 L160,140 L0,140 Z" class="cliff" />
+          <text
+            x="80"
+            y="130"
+            text-anchor="middle"
+            class="platform-label label-http"
+            font-size="18"
+          >
+            HTTP://
+          </text>
+
+          <path d="M320,220 L500,220 L500,140 L340,140 Z" class="cliff" />
+          <text
+            x="420"
+            y="130"
+            text-anchor="middle"
+            class="platform-label label-https"
+            font-size="18"
+          >
+            HTTPS://
+          </text>
+
+          <g class="padlock-group">
+            <rect x="408" y="85" width="24" height="18" rx="2" fill="#27ae60" />
+            <path
+              d="M413,85 L413,78 A7,7 0 0,1 427,78 L427,85"
+              fill="none"
+              stroke="#27ae60"
+              stroke-width="3"
+            />
+            <circle cx="420" cy="94" r="3" fill="#fff" />
+          </g>
+
+          <g class="bridge-left">
+            <line x1="160" y1="145" x2="240" y2="145" class="bridge-rope" />
+            <rect x="170" y="142" width="15" height="6" fill="#bdc3c7" />
+            <rect x="200" y="142" width="15" height="6" fill="#bdc3c7" />
+          </g>
+          <g class="bridge-right">
+            <line x1="260" y1="145" x2="340" y2="145" class="bridge-rope" />
+            <rect x="285" y="142" width="15" height="6" fill="#bdc3c7" />
+            <rect x="315" y="142" width="15" height="6" fill="#bdc3c7" />
+          </g>
+
+          <g class="sparks">
+            <line x1="245" y1="130" x2="255" y2="110" />
+            <line x1="255" y1="130" x2="265" y2="115" />
+            <line x1="250" y1="155" x2="240" y2="175" />
+          </g>
+
+          <g class="packet-group">
+            <rect
+              x="120"
+              y="115"
+              width="40"
+              height="30"
+              rx="5"
+              class="packet-body"
+            />
+            <circle cx="132" cy="125" r="3" class="packet-face" />
+            <circle cx="148" cy="125" r="3" class="packet-face" />
+            <path
+              d="M132,138 Q140,132 148,138"
+              fill="none"
+              stroke="#1a1a1a"
+              stroke-width="2"
+              stroke-linecap="round"
+            />
+          </g>
+        </svg>
+      </div>
+
+      <h1>HTTP</h1>
+      <h2>Path Not Secure</h2>
+      <p>
+        We couldn't find the page you requested. It looks like the connection
+        bridge snapped because it wasn't secure.
+      </p>
+
+      <div class="info-box">
+        <h3>
+          <svg
+            class="info-title-icon"
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+            width="24"
+            height="24"
+          >
+            <path
+              d="M11 15h2v2h-2zm0-8h2v6h-2zm.99-5C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8z"
+            />
+          </svg>
+          Check Your Browser URL
+        </h3>
+        <p>
+          Please look at the address bar at the top of your browser. Ensure the
+          address starts with <span class="highlight-https">https://</span> and
+          not just <span class="highlight-http">http://</span>. The 'S' stands
+          for Secure, and it's required to access this page.
+        </p>
+      </div>
+
+      <a href="#" onclick="switchToHttps(); return false;" class="btn"
+        >Switch to Secure (HTTPS)</a
+      >
+    </div>
+    <script>
+      function switchToHttps() {
+        // Get the current URL
+        var currentUrl = window.location.href;
+
+        // Check if it is actually HTTP
+        if (currentUrl.indexOf("http:") === 0) {
+          // Replace http: with https: and navigate
+          window.location.href = currentUrl.replace("http:", "https:");
+        } else {
+          // Fallback: just reload if already HTTPS (or some other edge case)
+          window.location.reload();
+        }
+      }
+    </script>
+  </body>
+</html>

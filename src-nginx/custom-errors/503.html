@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>503 - Service Unavailable</title>
+    <style>
+        :root {
+            --bg-color: #f8f9fa;
+            --text-color: #4a4a4a;
+            --headline-color: #1a1a1a;
+            --accent-color: #e74c3c; /* Warning Red */
+            --bot-color: #7f8c8d;
+            --bot-dark: #2c3e50;
+            --smoke-color: #bdc3c7;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            background-color: var(--bg-color);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            overflow: hidden;
+            color: var(--text-color);
+        }
+
+        .container {
+            text-align: center;
+            position: relative;
+            z-index: 10;
+        }
+
+        h1 {
+            font-size: 9rem;
+            margin: 0;
+            line-height: 1;
+            font-weight: 900;
+            letter-spacing: -5px;
+            color: var(--headline-color);
+            text-shadow: 4px 4px 0px rgba(0,0,0,0.15);
+        }
+
+        h2 {
+            font-size: 2rem;
+            margin: 10px 0 20px 0;
+            color: #f39c12; /* Orange for 'Maintenance/Warning' */
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-weight: 800;
+        }
+
+        p {
+            font-size: 1.2rem;
+            color: #555;
+            margin-bottom: 30px;
+            max-width: 500px;
+            margin-left: auto;
+            margin-right: auto;
+            line-height: 1.5;
+        }
+
+        .btn {
+            padding: 14px 35px;
+            background-color: var(--headline-color);
+            color: #fff;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: all 0.2s ease;
+            display: inline-block;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            background-color: #f39c12;
+            box-shadow: 0 6px 12px rgba(243, 156, 18, 0.3);
+        }
+
+        /* --- SVG STYLING --- */
+        .scene {
+            width: 300px;
+            height: 300px;
+            margin: 0 auto 10px;
+            overflow: visible;
+        }
+
+        /* The Robot Container - Vibrates */
+        .robot-group {
+            transform-origin: 150px 280px;
+            animation: vibrate 0.3s linear infinite;
+        }
+
+        /* Eyes - Spin crazily */
+        .eye-left, .eye-right {
+            transform-origin: center;
+            animation: spin-eyes 2s linear infinite;
+        }
+
+        /* Smoke Puffs */
+        .smoke {
+            opacity: 0;
+            fill: var(--smoke-color);
+            animation: smoke-rise 3s ease-out infinite;
+        }
+        .smoke-1 { animation-delay: 0s; transform-origin: 120px 80px; }
+        .smoke-2 { animation-delay: 1s; transform-origin: 150px 70px; }
+        .smoke-3 { animation-delay: 2s; transform-origin: 180px 80px; }
+
+        /* Warning Light on Chest */
+        .chest-light {
+            fill: #e74c3c;
+            animation: blink 0.5s steps(2, start) infinite;
+        }
+
+        /* Sweat/Oil Drops */
+        .drop {
+            fill: var(--bot-dark);
+            opacity: 0;
+            animation: drop-fall 2s linear infinite;
+        }
+        .drop-1 { animation-delay: 0.5s; }
+        .drop-2 { animation-delay: 1.5s; }
+
+        /* --- ANIMATIONS --- */
+
+        @keyframes vibrate {
+            0% { transform: translate(0, 0) rotate(0deg); }
+            25% { transform: translate(-2px, 2px) rotate(-1deg); }
+            50% { transform: translate(0, 0) rotate(0deg); }
+            75% { transform: translate(2px, -2px) rotate(1deg); }
+            100% { transform: translate(0, 0) rotate(0deg); }
+        }
+
+        @keyframes spin-eyes {
+            0% { transform: scale(1) rotate(0deg); }
+            50% { transform: scale(1.2) rotate(180deg); }
+            100% { transform: scale(1) rotate(360deg); }
+        }
+
+        @keyframes smoke-rise {
+            0% { opacity: 0.8; transform: translateY(0) scale(1); }
+            100% { opacity: 0; transform: translateY(-60px) scale(3); }
+        }
+
+        @keyframes blink {
+            to { fill: #7f8c8d; }
+        }
+
+        @keyframes drop-fall {
+            0% { opacity: 1; transform: translateY(0); }
+            100% { opacity: 0; transform: translateY(40px); }
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        
+        <div class="scene">
+            <svg viewBox="0 0 300 300" xmlns="http://www.w3.org/2000/svg">
+                
+                <circle cx="130" cy="80" r="10" class="smoke smoke-1"/>
+                <circle cx="150" cy="70" r="15" class="smoke smoke-2"/>
+                <circle cx="170" cy="80" r="12" class="smoke smoke-3"/>
+
+                <g class="robot-group">
+                    <line x1="150" y1="90" x2="150" y2="60" stroke="#2c3e50" stroke-width="4"/>
+                    <circle cx="150" cy="60" r="6" fill="#e74c3c"/>
+                    
+                    <rect x="90" y="90" width="120" height="90" rx="10" fill="#7f8c8d" stroke="#2c3e50" stroke-width="4"/>
+                    
+                    <rect x="105" y="105" width="90" height="50" rx="5" fill="#2c3e50"/>
+                    
+                    <g transform="translate(125, 130)">
+                        <g class="eye-left">
+                            <rect x="-10" y="-2" width="20" height="4" fill="#e74c3c"/>
+                            <rect x="-2" y="-10" width="4" height="20" fill="#e74c3c"/>
+                        </g>
+                    </g>
+                    <g transform="translate(175, 130)">
+                        <g class="eye-right">
+                            <rect x="-10" y="-2" width="20" height="4" fill="#e74c3c"/>
+                            <rect x="-2" y="-10" width="4" height="20" fill="#e74c3c"/>
+                        </g>
+                    </g>
+
+                    <polyline points="120,165 130,170 140,165 150,170 160,165 170,170 180,165" fill="none" stroke="#2c3e50" stroke-width="3"/>
+
+                    <path d="M100,180 L200,180 L190,280 L110,280 Z" fill="#95a5a6" stroke="#2c3e50" stroke-width="4"/>
+                    
+                    <rect x="125" y="200" width="50" height="40" fill="#bdc3c7" stroke="#2c3e50" stroke-width="2"/>
+                    <circle cx="135" cy="220" r="5" fill="#27ae60"/> <circle cx="150" cy="220" r="5" fill="#f1c40f"/> <circle cx="165" cy="220" r="6" class="chest-light"/> <path d="M90,200 Q70,220 80,250" fill="none" stroke="#7f8c8d" stroke-width="12" stroke-linecap="round"/>
+                    <path d="M210,200 Q230,220 220,250" fill="none" stroke="#7f8c8d" stroke-width="12" stroke-linecap="round"/>
+
+                    <circle cx="95" cy="120" r="3" class="drop drop-1"/>
+                    <circle cx="205" cy="110" r="4" class="drop drop-2"/>
+                </g>
+
+                <ellipse cx="150" cy="290" rx="60" ry="10" fill="#000" opacity="0.1"/>
+            </svg>
+        </div>
+
+        <h1>503</h1>
+        <h2>System Overheated</h2>
+        <p>The server is currently under heavy load or undergoing maintenance. Our bots are taking a mandatory cooling break. Please try again shortly.</p>
+        
+        <a href="javascript:location.reload()" class="btn">Retry Connection</a>
+    </div>
+
+</body>
+</html>
