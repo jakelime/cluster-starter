@@ -1,0 +1,3 @@
+[submodule "src-dbhelper"]
+	path = src-dbhelper
+	url = git@github.com:jakelime/db-helper.git

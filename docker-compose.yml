@@ -16,7 +16,7 @@ services:
       - NGINX_MEDIA_FOLDER=${SHARED_DATA_DIR}/www/media/
       - NGINX_PORT_HTTP=${NGINX_PORT_HTTP}
       - NGINX_PORT_HTTPS=${NGINX_PORT_HTTPS}
-      - APP1_PORT=${APP1_PORT}
+      - DJANGO_PORT=${DJANGO_PORT}
     ports:
       - "${NGINX_PORT_HTTP}:${NGINX_PORT_HTTP}"
       - "${NGINX_PORT_HTTPS}:${NGINX_PORT_HTTPS}"
@@ -53,10 +53,32 @@ services:
         reservations:
           memory: 2G
 
+  valkey:
+    restart: unless-stopped
+    container_name: ${PROJECT_NAME}_valkey
+    env_file:
+      - ./src-valkey/.env
+    build:
+      context: ./src-valkey
+      args:
+        url_docker: ${url_docker_index}
+        port_valkey: ${VALKEY_PORT}
+    # Enable persistance:
+    # --save: save DB snapshot if <keys: 1> change in <seconds: 60>
+    # --dir /data: saves data to mountpoint
+    command: valkey-server --save 60 1 --loglevel warning --dir /data
+    ports:
+      - "${VALKEY_PORT}:${VALKEY_PORT}"
+    volumes:
+      - dbdata_valkey:/data
+    networks:
+      - appnet
+
 volumes:
   appdata:
   applogs:
   dbdata_mgdb:
+  dbdata_valkey:
   cache_nginx:
 
 
