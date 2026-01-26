@@ -28,9 +28,35 @@ services:
     networks:
       - appnet
 
+  mgdb:
+    container_name: ${PROJECT_NAME}_mgdb
+    restart: unless-stopped
+    build:
+      context: ./src-mgdb
+      args:
+        url_docker: ${url_docker_index}
+    env_file:
+      - ./src-mgdb/.env
+    command: [ "--bind_ip", "0.0.0.0", "--port", "${MGDB_PORT}", "--quiet", "--wiredTigerCacheSizeGB", "3.5" ]
+    ports:
+      - "${MGDB_PORT}:${MGDB_PORT}"
+    volumes:
+      - dbdata_mgdb:/data/db
+      - ./src-mgdb/init-db.js:/docker-entrypoint-initdb.d/init-db.js:ro
+    networks:
+      - appnet
+    deploy:
+      resources:
+        limits:
+          cpus: "2.0"
+          memory: 8G
+        reservations:
+          memory: 2G
+
 volumes:
   appdata:
   applogs:
+  dbdata_mgdb:
   cache_nginx:
 
 
