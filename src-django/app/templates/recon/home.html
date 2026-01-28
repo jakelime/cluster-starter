@@ -1,0 +1,58 @@
+{% extends "recon/navbar.html" %}
+{% load crispy_forms_tags %}
+{% block content %}
+    <div class="container my-4">
+        {% include "common/partials/title.html" %}
+        {% include "common/partials/alerts.html" %}
+        <div class="row pt-2 pb-2">
+            <div class="col-12 pb-2">
+                <h2 class="text-body-emphasis">Main Functions</h2>
+                <p>Connectors are APIs that facilitate data integration and synchronization between different systems.</p>
+            </div>
+            <div class="col-md-6">
+                <h3 class="text-body-emphasis">Engines</h3>
+                <ul>
+                    <li>Handles complex data structures from Envis with ORM/ODM</li>
+                </ul>
+            </div>
+            <div class="col-md-6">
+                <h3 class="text-body-emphasis">Materials</h3>
+                <ul>
+                    <li>Handles ZMMR3010 reports from SAP to shortage list</li>
+                </ul>
+            </div>
+            <div class="col-md-6">
+                <h3 class="text-body-emphasis">Sales</h3>
+                <ul>
+                    <li>Handles Sales excel file with ORM/ODM</li>
+                </ul>
+            </div>
+            <div class="col-md-6">
+                <h3 class="text-body-emphasis">Operations</h3>
+                <ul>
+                    <li>Handles Operations excel file with ORM/ODM</li>
+                </ul>
+            </div>
+        </div>
+        <div class="row pt-4 pb-2">
+            <div class="col-12 pb-2">
+                <h2 class="text-body-emphasis">Connector Methods</h2>
+                <p>Each of the apps can have multiple modal of input/api methods.</p>
+            </div>
+            <div class="col-md-6">
+                <h3 class="text-body-emphasis">Manual file uploads</h3>
+                <ul>
+                    <li>Uploads ZMMR3010 reports</li>
+                    <li>Uploads Sales excel files</li>
+                    <li>Uploads Database exported files, i.e. LeadingOrder.json, mrv.csv, ..</li>
+                </ul>
+            </div>
+            <div class="col-md-6">
+                <h3 class="text-body-emphasis">Automatic file sync</h3>
+                <ul>
+                    <li>SFTP interface for automatic flatfile synchronization</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+{% endblock content %}

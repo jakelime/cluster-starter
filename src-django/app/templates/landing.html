@@ -1,0 +1,97 @@
+{% extends "base-landing.html" %}
+{% load static %}
+{% block content %}
+    <div class="container">
+        <div class="row pb-4">
+            <div class="col-12">
+                <div class="h-100 p-3 text-bg-dark rounded-3 text-center">
+                    <div class="container">
+                        <div class="row">
+                            {% if user.is_authenticated %}
+                                <div class="container">
+                                    <div class="row">
+                                        {% if user.preferred_name %}
+                                            <h3>Hi {{ user.preferred_name }}</h3>
+                                        {% else %}
+                                            <h3>Hi {{ user.username }}</h3>
+                                        {% endif %}
+                                    </div>
+                                    <div class="row">
+                                        <form method="post" action="{% url 'creds:logout' %}">
+                                            {% csrf_token %}
+                                            <button type="submit" class="btn btn-outline-light">Logout</button>
+                                        </form>
+                                    </div>
+                                </div>
+                            {% else %}
+                                <div class="container">
+                                    <div class="row">
+                                        <h2>Welcome</h2>
+                                        <p>**under development: ppcs project**</p>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <div class="d-inline-flex gap-2 m-2">
+                                                <a class="btn btn-outline-light"
+                                                   href="{% url 'creds:login' %}"
+                                                   role="button">Login</a>
+                                                <a class="btn btn-outline-light"
+                                                   href="{% url 'creds:user_register' %}"
+                                                   role="button">Register</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% comment %} Large Jumbotrons {% endcomment %}
+        <div class="p-5 mb-4 bg-light rounded-3">
+            <div class="container-fluid py-5">
+                <div class="row">
+                    <div class="col-md-4">
+                        <a href="{% url 'dashboard' %}">
+                            <img src="{% static 'images/filler.jpg' %}"
+                                 class="img-fluid"
+                                 alt="filler coverphoto"
+                                 width="450"
+                                 height="450" />
+                        </a>
+                    </div>
+                    <div class="col">
+                        <h1 class="display-5 fw-bold">Production Planning and Control System</h1>
+                        <p class="col-md-8 text-justify">
+                            Fully integrated end-to-end platform manage the entire production planning and control process in the Engines MRO shop.
+                        </p>
+                        <a href="{% url 'dashboard' %}"
+                           class="btn btn-primary btn-lg"
+                           role="button">Access</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row align-items-md-stretch">
+            <div class="col-md-6 pt-2 pb-2">
+                <div class="h-100 p-5 text-bg-light rounded-3">
+                    <h2>User Account Management</h2>
+                    <p>Activate, register and manage user accounts.</p>
+                    <a href="{% url 'creds:home' %}"
+                       class="btn btn-outline-secondary"
+                       role="button">Access</a>
+                </div>
+            </div>
+            <div class="col-md-6 pt-2 pb-2">
+                <div class="h-100 p-5 text-bg-light rounded-3">
+                    <h2>Connectors</h2>
+                    <p>Extract, transform and load. Manage the data connectivity between different platforms.</p>
+                    <a href="{% url 'recon:home' %}"
+                       class="btn btn-outline-secondary"
+                       role="button">Access</a>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock content %}

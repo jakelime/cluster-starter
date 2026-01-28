@@ -1,0 +1,14 @@
+{% extends "materials/navbar.html" %}
+{% load crispy_forms_tags %}
+{% block content %}
+  {% comment %}
+    This duplicate is created, parent to recon/zmmr.
+    It is for the purpose to reuse the materials navbar. 
+  {% endcomment %}
+  <div class="container my-4">
+    {% include "common/partials/title.html" %}
+    {% include "common/partials/alerts.html" %}
+    {% include "common/partials/form-errors.html" %}
+    <div class="row">{% crispy form %}</div>
+  </div>
+{% endblock content %}

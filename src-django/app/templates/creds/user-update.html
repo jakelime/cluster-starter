@@ -1,0 +1,10 @@
+{% extends "creds/navbar.html" %}
+{% load crispy_forms_tags %}
+{% block content %}
+  <div class="container my-4">
+    {% include "common/partials/title.html" %}
+    {% include "common/partials/alerts.html" %}
+    {% include "common/partials/form-errors.html" %}
+    <div class="row pt-4">{% crispy form %}</div>
+  </div>
+{% endblock content %}

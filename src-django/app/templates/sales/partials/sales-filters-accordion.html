@@ -1,0 +1,52 @@
+{% load django_bootstrap5 %}
+{% load crispy_forms_tags %}
+<div class="row py-2">
+    <div class="accordion" id="accordionFilterTable">
+        <div class="accordion-item">
+            <h2 class="accordion-header" id="headingTwo">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">Expand
+                    filters</button>
+            </h2>
+            <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo"
+                data-bs-parent="#accordionExample">
+                <div class="accordion-body">
+                    <div class="card-body">
+                        <form hx-get="{% url 'sales:sales_list' %}" hx-target="#table-container" hx-push-url="true"
+                            class="row g-3">
+                            <div class="col-12">
+                                <div class="row justify-content-between">
+                                    <div class="col-md-4">
+                                        {{ filter.form.search|as_crispy_field }}
+                                    </div>
+                                    <div class="col-md-2 align-self-center">
+                                        <button type="submit" class="btn btn-primary w-100">Apply Filters</button>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-2">
+                                        {{ filter.form.dt_input_target|as_crispy_field }}
+                                    </div>
+                                    <div class="col-md-2">
+                                        {{ filter.form.dt_input_actual|as_crispy_field }}
+                                    </div>
+                                    <div class="col-md-2">
+                                        {{ filter.form.dt_induction_target|as_crispy_field }}
+                                    </div>
+                                    <div class="col-md-2">
+                                        {{ filter.form.dt_induction_actual|as_crispy_field }}
+                                    </div>
+                                    <div class="col-md-2">
+                                        {{ filter.form.dt_shipment_target|as_crispy_field }}
+                                    </div>
+                                    <div class="col-md-2">
+                                        {{ filter.form.dt_shipment_actual|as_crispy_field }}
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>

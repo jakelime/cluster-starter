@@ -1,0 +1,70 @@
+{% load static %}
+{% load django_htmx %}
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta name="description" content="" />
+        <meta name="author" content="Jake Lim" />
+        <meta name="keywords" content="" />
+        <title>PPCS</title>
+        <link rel="shortcut icon"
+              type="image/png"
+              href="{% static 'favicon.ico' %}" />
+        <link href="{% static 'css/bootstrap/bootstrap.min.css' %}"
+              rel="stylesheet" />
+        <link rel="shortcut icon"
+              type="image/png"
+              href="{% static 'favicon.ico' %}" />
+        <link rel="stylesheet"
+              type="text/css"
+              href="{% static 'css/phosphor-icons/css/fill/style.css' %}" />
+        <link rel="stylesheet"
+              type="text/css"
+              href="{% static 'css/phosphor-icons/css/regular/style.css' %}" />
+        <link rel="stylesheet"
+              type="text/css"
+              href="{% static 'css/bootstrap/bootstrap.min.css' %}" />
+        <link rel="stylesheet"
+              type="text/css"
+              href="{% static 'css/jetforge/base.css' %}" />
+        {% htmx_script %}
+    </head>
+    <body>
+        <div class="container pt-2 pb-2">
+            <header class="pb-3 mb-4 border-bottom">
+                <div class="row pb-4">{% include "common/partials/alerts-isdevelopment.html" %}</div>
+                <a href="{% url 'landing' %}"
+                   class="d-flex align-items-center text-dark text-decoration-none">
+                    <img src="{% static 'images/stengg_logo_full_380x60.png' %}"
+                         alt="logo"
+                         height="40" />
+                </a>
+            </header>
+        </div>
+        <main>
+            <div class="container pt-2 pb-5">
+                {% block content %}
+                {% endblock content %}
+            </div>
+        </main>
+        <div class="container py-2">
+            <div class="row mb-4 pb-4">
+                <footer class="text-muted text-center pt-5 border-top small">
+                    <i>{{ GIT_VERSION }}</i>
+                    <br>
+                    Developed by ST Engineering
+                    <br>
+                    Commercial Aerospace, Engines Services
+                    <br>
+                    Transformation Dept. © 2025
+                </footer>
+            </div>
+        </div>
+        <script src="{% static 'js/htmx/htmx.min.js' %}"></script>
+        <script src="{% static 'js/bootstrap/bootstrap.bundle.min.js' %}"></script>
+        <script src="{% static 'js/feather-icons/feather.min.js' %}"></script>
+        <script src="{% static 'js/bootstrap/dashboard.js' %}"></script>
+    </body>
+</html>

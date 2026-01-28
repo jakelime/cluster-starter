@@ -1,0 +1,63 @@
+{% extends "recon/navbar.html" %}
+{% load crispy_forms_tags %}
+{% block content %}
+    <div class="container my-4">
+        {% include "common/partials/title.html" %}
+        {% include "common/partials/alerts.html" %}
+        {% include "common/partials/form-errors.html" %}
+        <div class="row py-2">
+            <div class="col-md-12">
+                <h2>Report Detail</h2>
+                <p>
+                    <b>report.ref:</b> {{ object.pk }}
+                    <br>
+                    <b>report.status:</b> {{ object.status }}
+                    <br>
+                </p>
+            </div>
+        </div>
+        <div class="row py-2">
+            <div class="col-md-12">
+                <h2>Task Details</h2>
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th class="col-2">task_attr</th>
+                            <th class="col-10">details</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>task.id</td>
+                            <td class="font-monospace">{{ object.task_id }}</td>
+                        </tr>
+                        <tr>
+                            <td>task.state</td>
+                            <td>{{ task.state }}</td>
+                        </tr>
+                        <tr>
+                            <td>date_done</td>
+                            <td>{{ task.date_done }}</td>
+                        </tr>
+                        <tr>
+                            <td>result</td>
+                            <td class="font-monospace">{{ task.result }}</td>
+                        </tr>
+                        {% if task.traceback %}
+                            <tr>
+                                <td>traceback</td>
+                                <td class="font-monospace">{{ task.traceback }}</td>
+                            </tr>
+                        {% endif %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="row pb-2">
+            <div class="col-md-12">
+                <a href="{% url 'recon:zmmr3010_list' %}" class="btn btn-secondary">Back to List</a>
+            </div>
+        </div>
+        <div class="row mt-4 pt-4">{% crispy form %}</div>
+    </div>
+{% endblock content %}

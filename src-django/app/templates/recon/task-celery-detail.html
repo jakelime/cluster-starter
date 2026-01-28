@@ -1,0 +1,112 @@
+{% extends "recon/navbar.html" %}
+{% block content %}
+    <div class="container my-4">
+        {% include "common/partials/title.html" %}
+        {% include "common/partials/alerts.html" %}
+        {% include "common/partials/form-errors.html" %}
+        <div class="row">
+            <div class="col-12">
+                {# --- ERROR STATE: Form to try again --- #}
+                {% if error %}
+                    <div class="alert alert-danger" role="alert">{{ error }}</div>
+                    <div class="card shadow-sm">
+                        <div class="card-body">
+                            <form method="get" action="{{ request.path }}" class="row g-3">
+                                <div class="col-auto">
+                                    <label for="retryTaskId" class="visually-hidden">Task ID</label>
+                                    <input type="text"
+                                           class="form-control"
+                                           name="taskid"
+                                           id="retryTaskId"
+                                           placeholder="Enter Task ID">
+                                </div>
+                                <div class="col-auto">
+                                    <button type="submit" class="btn btn-primary">Lookup</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    {# --- SUCCESS STATE: Task Details --- #}
+                {% elif celerytask %}
+                    <div class="card shadow-sm">
+                        <div class="card-header d-flex justify-content-between align-items-center">
+                            <span class="fw-bold">Celery Task ID: <span class="font-monospace">{{ celerytask.id }}</span></span>
+                            {% if celerytask.status == 'SUCCESS' %}
+                                <span class="badge bg-success">SUCCESS</span>
+                            {% elif celerytask.status == 'FAILURE' %}
+                                <span class="badge bg-danger">FAILURE</span>
+                            {% elif celerytask.status == 'PENDING' %}
+                                <span class="badge bg-secondary">PENDING</span>
+                            {% elif celerytask.status == 'STARTED' %}
+                                <span class="badge bg-primary">STARTED</span>
+                            {% elif celerytask.status == 'RETRY' %}
+                                <span class="badge bg-warning text-dark">RETRY</span>
+                            {% else %}
+                                <span class="badge bg-info text-dark">{{ celerytask.status }}</span>
+                            {% endif %}
+                        </div>
+                        <div class="card-body">
+                            <dl class="row">
+                                <dt class="col-sm-3">Date Done</dt>
+                                <dd class="col-sm-9">
+                                    {{ celerytask.date_done|default:"N/A" }}
+                                </dd>
+                                <dt class="col-sm-3">Result / Return Value</dt>
+                                <dd class="col-sm-9">
+                                    <pre class="bg-light p-2 border rounded"><code>{{ celerytask.result }}</code></pre>
+                                </dd>
+                                <dt class="col-sm-3">Traceback</dt>
+                                {% if perms.creds.view_sourcecode %}
+                                    {% if celerytask.traceback %}
+                                        <dd class="col-sm-9">
+                                            <div class="alert alert-danger mb-0">
+                                                <pre class="mb-0" style="white-space: pre-wrap;">{{ celerytask.traceback }}</pre>
+                                            </div>
+                                        </dd>
+                                    {% else %}
+                                        <dd class="col-sm-9">
+                                            <pre class="bg-light p-2 border rounded"><code>None</code></pre>
+                                        </dd>
+                                    {% endif %}
+                                {% else %}
+                                    <dd class="col-sm-9">
+                                        <pre class="bg-light p-2 border rounded"><code>403 Forbidden</code></pre>
+                                    </dd>
+                                {% endif %}
+                            </dl>
+                        </div>
+                        <div class="card-footer text-muted">
+                            <!-- Row 1: Refresh Current -->
+                            <div class="d-flex justify-content-between align-items-center mb-3">
+                                <small>Data retrieved from Celery Backend</small>
+                                <!-- This keeps the current query params for refreshing -->
+                                <a href="{{ request.get_full_path }}"
+                                   class="btn btn-sm btn-outline-secondary">Refresh Status</a>
+                            </div>
+                            <hr>
+                            <!-- Row 2: Lookup Different ID -->
+                            <form method="get"
+                                  action="{{ request.path }}"
+                                  class="row g-2 align-items-center">
+                                <div class="col-auto">
+                                    <label for="inputTaskId" class="col-form-label fw-bold">Inspect another:</label>
+                                </div>
+                                <div class="col">
+                                    <input type="text"
+                                           name="taskid"
+                                           id="inputTaskId"
+                                           class="form-control form-control-sm"
+                                           placeholder="Enter Task UUID..."
+                                           required>
+                                </div>
+                                <div class="col-auto">
+                                    <button type="submit" class="btn btn-sm btn-primary">Retrieve</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+{% endblock content %}

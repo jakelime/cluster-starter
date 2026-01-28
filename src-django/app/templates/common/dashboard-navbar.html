@@ -1,0 +1,116 @@
+{% extends "common/dashboard-base.html" %}
+{% load static %}
+{% block title %}
+    Jetforge
+{% endblock title %}
+{% block navbar %}
+    <ul class="nav flex-column mb-auto">
+        <li class="nav-item mt-4">
+            <a class="nav-link d-flex align-items-center gap-2 {% if request.resolver_match.view_name == 'dashboard' %}active{% endif %}"
+               {% if request.resolver_match.view_name == 'dashboard' %}aria-current="page"{% endif %}
+               href="{% url 'dashboard' %}">
+                <i class="ph-fill ph-house" style="font-size: 20px;"></i>
+                Home
+            </a>
+        </li>
+        <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-2 text-uppercase">
+            <span>Input</span>
+        </h6>
+        <ul class="nav flex-column mb-auto">
+            <li class="nav-item">
+                <a class="nav-link d-flex align-items-center gap-2 {% if request.resolver_match.view_name == 'sales:home' %}active{% endif %}"
+                   {% if request.resolver_match.view_name == 'sales:home' %}aria-current="page"{% endif %}
+                   href="{% url 'sales:home' %}">
+                    <i class="ph-fill ph-money" style="font-size: 20px;"></i>
+                    Sales
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link d-flex align-items-center gap-2 {% if request.resolver_match.view_name == 'operations:home' %}active{% endif %}"
+                   {% if request.resolver_match.view_name == 'operations:home' %}aria-current="page"{% endif %}
+                   href="{% url 'operations:home' %}">
+                    <i class="ph-fill ph-hard-hat" style="font-size: 20px;"></i>
+                    Operations
+                </a>
+            </li>
+        </ul>
+        <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-2 text-uppercase">
+            <span>Engines</span>
+        </h6>
+        <ul class="nav flex-column mb-auto">
+            <li class="nav-item">
+                <a class="nav-link d-flex align-items-center gap-2 {% if request.resolver_match.view_name == 'joborders:home' %}active{% endif %}"
+                   {% if request.resolver_match.view_name == 'joborders:home' %}aria-current="page"{% endif %}
+                   href="{% url 'joborders:home' %}">
+                    <i class="ph-fill ph-airplane-takeoff" style="font-size: 20px;"></i>
+                    JobOrders
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link d-flex align-items-center gap-2 {% if request.resolver_match.view_name == 'engines:home' %}active{% endif %}"
+                   {% if request.resolver_match.view_name == 'engines:home' %}aria-current="page"{% endif %}
+                   href="{% url 'engines:home' %}">
+                    <i class="ph-fill ph-engine" style="font-size: 20px;"></i>
+                    Engines
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link d-flex align-items-center gap-2 {% if request.resolver_match.view_name == 'customers:home' %}active{% endif %}"
+                   {% if request.resolver_match.view_name == 'customers:home' %}aria-current="page"{% endif %}
+                   href="{% url 'customers:home' %}">
+                    <i class="ph-fill ph-person" style="font-size: 20px;"></i>
+                    Customers
+                </a>
+            </li>
+        </ul>
+        <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-2 text-uppercase">
+            <span>Materials</span>
+        </h6>
+        <ul class="nav flex-column mb-auto">
+            <li class="nav-item">
+                <a class="nav-link d-flex align-items-center gap-2 {% if request.resolver_match.view_name == 'materials:home' %}active{% endif %}"
+                   {% if request.resolver_match.view_name == 'materials:home' %}aria-current="page"{% endif %}
+                   href="{% url 'materials:home' %}">
+                    <i class="ph-fill ph-barn" style="font-size: 20px;"></i>
+                    Materials
+                </a>
+            </li>
+        </ul>
+        <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-2 text-uppercase">
+            <span>Controls</span>
+        </h6>
+        <ul class="nav flex-column mb-auto">
+            <li class="nav-item">
+                <a class="nav-link d-flex align-items-center gap-2 {% if request.resolver_match.view_name == 'recon:home' %}active{% endif %}"
+                   {% if request.resolver_match.view_name == 'recon:home' %}aria-current="page"{% endif %}
+                   href="{% url 'recon:home' %}">
+                    <i class="ph-fill ph-plugs" style="font-size: 20px;"></i>
+                    Connectors
+                </a>
+            </li>
+        </ul>
+        <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-2 text-uppercase">
+            <span>Configurations</span>
+        </h6>
+        <ul class="nav flex-column mb-auto">
+            <li class="nav-item">
+                <a class="nav-link d-flex align-items-center gap-2 {% if request.resolver_match.view_name == 'app:configsettings_list' %}active{% endif %}"
+                   {% if request.resolver_match.view_name == 'app:configsettings_list' %}aria-current="page"{% endif %}
+                   href="{% url 'app:configsettings_list' %}">
+                    <i class="ph-fill ph-wrench" style="font-size: 20px;"></i>
+                    Configs
+                </a>
+            </li>
+            {% if perms.creds.view_usermodel %}
+                <li class="nav-item">
+                    <a class="nav-link d-flex align-items-center gap-2 {% if request.resolver_match.view_name == 'creds:user_list' %}active{% endif %}"
+                       {% if request.resolver_match.view_name == 'creds:user_list' %}aria-current="page"{% endif %}
+                       href="{% url 'creds:user_list' %}">
+                        <i class="ph-fill ph-users-three" style="font-size: 20px;"></i>
+                        Manage Users
+                    </a>
+                </li>
+            {% endif %}
+        </ul>
+    </ul>
+{% endblock navbar %}

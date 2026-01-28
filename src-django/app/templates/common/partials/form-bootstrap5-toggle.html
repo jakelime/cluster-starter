@@ -1,0 +1,25 @@
+{% load crispy_forms_tags %}
+{% load sales_extras %}
+
+<div class="row">
+    {% for field in form %}
+    <div class="col-md-6 mb-3">
+        {% if not is_editing %}
+        <!-- view mode -->
+        <div class="view-mode-field">
+            <label class="form-label small fw-bold mb-0">
+                {{ field.label }}
+            </label>
+            <div class="form-control-plaintext pt-0 text-dark border-bottom">
+                {{ field|format_field_value:request|default_if_none:"-" }}
+            </div>
+        </div>
+        {% else %}
+        <!-- edit mode -->
+        <div class="edit-mode-field">
+            {{ field|as_crispy_field }}
+        </div>
+        {% endif %}
+    </div>
+    {% endfor %}
+</div>

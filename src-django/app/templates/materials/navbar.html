@@ -1,0 +1,49 @@
+{% extends "common/dashboard-base.html" %}
+{% load static %}
+{% block title %}
+    Materials
+{% endblock title %}
+{% block navbar %}
+    <ul class="nav flex-column mb-auto">
+        <li class="nav-item mt-4">
+            <a class="nav-link d-flex align-items-center gap-2 {% if request.resolver_match.view_name == 'dashboard' %}active{% endif %}"
+               {% if request.resolver_match.view_name == 'dashboard' %}aria-current="page"{% endif %}
+               href="{% url 'dashboard' %}">
+                <i class="ph-fill ph-house" style="font-size: 20px;"></i>
+                Home
+            </a>
+        </li>
+        <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-2 text-uppercase">
+            <span>Materials</span>
+        </h6>
+        <li class="nav-item mt">
+            <a class="nav-link d-flex align-items-center gap-2 {% if request.resolver_match.view_name == 'materials:home' %}active{% endif %}"
+               {% if request.resolver_match.view_name == 'materials:home' %}aria-current="page"{% endif %}
+               href="{% url 'materials:home' %}">
+                <i class="ph-fill ph-barn" style="font-size: 20px;"></i>
+                Main
+            </a>
+        </li>
+        <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-2 text-uppercase">
+            <span>Shortage Mgmt</span>
+        </h6>
+        <ul class="nav flex-column mb-auto">
+            <li class="nav-item">
+                <a class="nav-link d-flex align-items-center gap-2 {% if request.resolver_match.view_name == 'materials:zmmr3010_create' %}active{% endif %}"
+                   {% if request.resolver_match.view_name == 'materials:zmmr3010_create' %}aria-current="page"{% endif %}
+                   href="{% url 'materials:zmmr3010_create' %}">
+                    <i class="ph-fill ph-file-arrow-up" style="font-size: 20px;"></i>
+                    New upload
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link d-flex align-items-center gap-2 {% if request.resolver_match.view_name == 'materials:zmmr3010_list' %}active{% endif %}"
+                   {% if request.resolver_match.view_name == 'materials:zmmr3010_list' %}aria-current="page"{% endif %}
+                   href="{% url 'materials:zmmr3010_list' %}">
+                    <i class="ph-fill ph-files" style="font-size: 20px;"></i>
+                    Uploaded ZMMR3010
+                </a>
+            </li>
+        </ul>
+    </ul>
+{% endblock navbar %}

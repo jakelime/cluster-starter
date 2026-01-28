@@ -1,0 +1,26 @@
+{% extends "materials/navbar.html" %}
+{% load crispy_forms_tags %}
+{% block content %}
+    <div class="container my-4">
+        {% include "common/partials/title.html" %}
+        {% include "common/partials/alerts.html" %}
+        <div class="row align-items-md-stretch">
+            <div class="col-md-6 py-2">
+                <div class="h-100 p-5 text-bg-light rounded-3">
+                    <h2>ZMMR3010 Shortage Reports</h2>
+                    <p>Run the shortage reporting programme from SAP.</p>
+                    <ul class="list-unstyled ps-0">
+                        <li>
+                            <i class="ph-fill ph-upload"></i>
+                            <a class="icon-link mb-1" href="{% url 'materials:zmmr3010_create' %}">New ZMMR3010 SAP file upload</a>
+                        </li>
+                        <li>
+                            <i class="ph-fill ph-files"></i>
+                            <a class="icon-link mb-1" href="{% url 'materials:zmmr3010_list' %}">List of Past Uploads</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock content %}

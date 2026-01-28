@@ -1,0 +1,41 @@
+{% extends "creds/navbar.html" %}
+{% load render_table from django_tables2 %}
+{% load crispy_forms_tags %}
+{% load django_bootstrap5 %}
+{% block content %}
+  <div class="container-fluid my-4">
+    {% include "common/partials/title.html" %}
+    {% include "common/partials/alerts.html" %}
+    {% include "common/partials/component-accordion.html" %}
+    <div class="row">{% render_table table %}</div>
+  </div>
+  <script>
+    function activateUser(button) {
+        const username = button.getAttribute('data-username');
+        const url = button.getAttribute('data-activate-url');
+        if (!confirm(`Are you sure you want to activate user ${username}?`)) {
+            return; 
+        }
+        const csrfToken = document.querySelector('[name=csrfmiddlewaretoken]').value; 
+        fetch(url, {
+            method: 'POST',
+            headers: {
+                'X-CSRFToken': csrfToken,
+            },
+        })
+        .then(response => {
+            if (!response.ok) {
+                console.error('Activation failed:', response.statusText);
+                alert(`Error: Could not activate ${username}. Please check permissions.`);
+            } else {
+                console.log(`User ${username} activated successfully. Reloading page.`);
+                window.location.reload();
+            }
+        })
+        .catch(error => {
+            console.error('Network or other error:', error);
+            alert('A network error occurred. Please try again.');
+        });
+    }
+  </script>
+{% endblock content %}

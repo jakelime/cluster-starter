@@ -1,0 +1,46 @@
+{% extends "common/dashboard-navbar.html" %}
+{% load crispy_forms_tags %}
+{% block content %}
+    <div class="container my-4">
+        {% include "common/partials/title.html" %}
+        {% include "common/partials/alerts.html" %}
+        <div class="row align-items-md-stretch">
+            <div class="col-md-6 col-xl-4 py-2">
+                <div class="h-100 p-5 text-bg-light rounded-3">
+                    <h2>Customers</h2>
+                    <p>Manage customers and joborders information.</p>
+                    <a href="{% url 'customers:home' %}"
+                       class="btn btn-outline-secondary"
+                       role="button">Access</a>
+                </div>
+            </div>
+            <div class="col-md-6 col-xl-4 py-2">
+                <div class="h-100 p-5 text-bg-light rounded-3">
+                    <h2>Engine Hardware</h2>
+                    <p>Data management: Engine hardware related information.</p>
+                    <a href="{% url 'engines:home' %}"
+                       class="btn btn-outline-secondary"
+                       role="button">Access</a>
+                </div>
+            </div>
+            <div class="col-md-6 col-xl-4 py-2">
+                <div class="h-100 p-5 text-bg-light rounded-3">
+                    <h2>Materials</h2>
+                    <p>Manage materials: Provisioning, Spares, USM, Purchase, Stock, etc.</p>
+                    <a href="{% url 'materials:home' %}"
+                       class="btn btn-outline-secondary"
+                       role="button">Access</a>
+                </div>
+            </div>
+            <div class="col-md-6 col-xl-4 py-2">
+                <div class="h-100 p-5 text-bg-light rounded-3">
+                    <h2>Job Orders</h2>
+                    <p>Manage Engine Jobs in Engine's MRO shop.</p>
+                    <a href="{% url 'joborders:home' %}"
+                       class="btn btn-outline-secondary"
+                       role="button">Access</a>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock content %}

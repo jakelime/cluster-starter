@@ -1,0 +1,36 @@
+{% load static %}
+{% load django_htmx %}
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="auto">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="description" content="">
+        <meta name="theme-color" content="#712cf9">
+        <title>
+            {% block title %}
+            {% endblock title %}
+        </title>
+        <link rel="shortcut icon"
+              type="image/png"
+              href="{% static 'favicon.ico' %}" />
+        <link rel="stylesheet"
+              type="text/css"
+              href="{% static 'css/phosphor-icons/css/fill/style.css' %}" />
+        <link rel="stylesheet"
+              type="text/css"
+              href="{% static 'css/phosphor-icons/css/regular/style.css' %}" />
+        <link rel="stylesheet"
+              type="text/css"
+              href="{% static 'css/bootstrap/bootstrap.min.css' %}" />
+        <link rel="stylesheet"
+              type="text/css"
+              href="{% static 'css/jetforge/base.css' %}" />
+    </head>
+    <body hx-headers='{"x-csrftoken": "{{ csrf_token }}"}'>
+        {% block basecontent %}
+        {% endblock basecontent %}
+        <script src="{% static 'js/bootstrap/bootstrap.bundle.min.js' %}"></script>
+        {% htmx_script %}
+    </body>
+</html>

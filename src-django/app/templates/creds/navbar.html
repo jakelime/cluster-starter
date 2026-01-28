@@ -1,0 +1,30 @@
+{% extends "common/dashboard-base.html" %}
+{% load static %}
+{% block title %}
+    Users Accounts
+{% endblock title %}
+{% block navbar %}
+    <ul class="nav flex-column mb-auto">
+        <li class="nav-item mt-4">
+            <a class="nav-link d-flex align-items-center gap-2 {% if request.resolver_match.view_name == 'dashboard' %}active{% endif %}"
+               {% if request.resolver_match.view_name == 'dashboard' %}aria-current="page"{% endif %}
+               href="{% url 'dashboard' %}">
+                <i class="ph-fill ph-house" style="font-size: 20px;"></i>
+                Home
+            </a>
+        </li>
+        <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-2 text-uppercase">
+            <span>Users Management</span>
+        </h6>
+        <ul class="nav flex-column mb-auto">
+            <li class="nav-item">
+                <a class="nav-link d-flex align-items-center gap-2 {% if request.resolver_match.view_name == 'creds:user_list' %}active{% endif %}"
+                   {% if request.resolver_match.view_name == 'creds:user_list' %}aria-current="page"{% endif %}
+                   href="{% url 'creds:user_list' %}">
+                    <i class="ph-fill ph-users-three" style="font-size: 20px;"></i>
+                    Manage Users
+                </a>
+            </li>
+        </ul>
+    </ul>
+{% endblock navbar %}

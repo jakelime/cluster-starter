@@ -1,0 +1,37 @@
+{% extends "common/dashboard-navbar.html" %}
+{% block content %}
+    <div class="container-fluid my-4">
+        {% include "common/partials/title.html" %}
+        {% include "common/partials/alerts.html" %}
+        {% include "sales/partials/sales-filters-accordion.html" %}
+        <div class="row py-2">
+            <span>
+                <button class="btn btn-outline-secondary" id="refreshButton" onClick="javascript:history.go(0);">
+                    <i class="ph-fill ph-arrow-clockwise"></i> Refresh Table
+                </button>
+            </span>
+            {% if perms.sales.view_financials or user.is_superuser %}
+            <a href="{% url 'sales:toggle_redaction' %}" class="btn btn-outline-secondary btn-sm">
+                {% if request.session.hide_financials %}
+                <i class="bi bi-eye"></i> Show Financials
+                {% else %}
+                <i class="bi bi-eye-slash"></i> Redact Financials
+                {% endif %}
+            </a>
+            {% endif %}
+        </div>
+        <div class="modal fade" id="detailModal" tabindex="-1" aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content" id="detailModalContent">
+                    <!-- Content loads here via HTMX -->
+                    <div class="modal-body text-center p-5">Loading...</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Table Container -->
+        <div id="table-container">
+            {% include "sales/partials/sales-list-table.html" %}
+        </div>
+    </div>
+{% endblock content %}

@@ -1,0 +1,32 @@
+{% extends "recon/navbar.html" %}
+{% load crispy_forms_tags %}
+{% block content %}
+  <div class="container my-4">
+    {% include "common/partials/title.html" %}
+    {% include "common/partials/alerts.html" %}
+    {# --- Delete Confirmation Card --- #}
+    <div class="row py-2">
+      <div class="col-12 col-md-10 col-lg-8 col-xl-6">
+        <div class="card border-warning shadow-sm">
+          <div class="card-header bg-warning text-dark d-flex align-items-center">
+            <strong>Confirm Deletion</strong>
+          </div>
+          <div class="card-body">
+            <p class="card-text fs-5">
+              Are you sure you want to delete
+              <strong>{{ object }}</strong>?
+            </p>
+            <p class="text-muted small mb-4">This is a marked deletion.</p>
+            <form method="post">
+              {% csrf_token %}
+              <div class="d-flex justify-content-end gap-2">
+                <a href="{% url 'recon:zmmr3010_list' %}" class="btn btn-secondary">Cancel</a>
+                <button type="submit" class="btn btn-warning">Yes, Delete</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock content %}

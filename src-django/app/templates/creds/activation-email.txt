@@ -1,0 +1,15 @@
+{% autoescape off %}
+
+Hi {{ user.first_name|safe }} {{ user.last_name|safe }},
+
+You have received this email because you have recently signed up for an account at {{ domain|safe }}.
+
+Please click on the link to confirm your registration:
+
+http://{{ domain|safe }}/creds/activate/{{ uid|safe }}/{{ token|safe }}
+
+** This is a auto-generated email. Please do not reply to this message.
+
+In case of enquiries, please contact the Transformation Dept.
+
+{% endautoescape %}

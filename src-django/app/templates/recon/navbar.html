@@ -1,0 +1,81 @@
+{% extends "common/dashboard-base.html" %}
+{% load static %}
+{% block title %}
+    Connectors
+{% endblock title %}
+{% block navbar %}
+    <ul class="nav flex-column mb-auto">
+        <li class="nav-item mt-4">
+            <a class="nav-link d-flex align-items-center gap-2 {% if request.resolver_match.view_name == 'dashboard' %}active{% endif %}"
+               {% if request.resolver_match.view_name == 'dashboard' %}aria-current="page"{% endif %}
+               href="{% url 'dashboard' %}">
+                <i class="ph-fill ph-house" style="font-size: 20px;"></i>
+                Home
+            </a>
+        </li>
+        <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-2 text-uppercase">
+            <span>Connectors</span>
+        </h6>
+        <li class="nav-item">
+            <a class="nav-link d-flex align-items-center gap-2 {% if request.resolver_match.view_name == 'recon:home' %}active{% endif %}"
+               {% if request.resolver_match.view_name == 'recon:home' %}aria-current="page"{% endif %}
+               href="{% url 'recon:home' %}">
+                <i class="ph-fill ph-plugs" style="font-size: 20px;"></i>
+                Main
+            </a>
+        </li>
+        <ul class="nav flex-column mb-auto">
+            <li class="nav-item">
+                <a class="nav-link d-flex align-items-center gap-2 {% if request.resolver_match.view_name == 'recon:engines_connectors' %}active{% endif %}"
+                   {% if request.resolver_match.view_name == 'recon:engines_connectors' %}aria-current="page"{% endif %}
+                   href="{% url 'recon:engines_connectors' %}">
+                    <i class="ph-fill ph-engine" style="font-size: 20px;"></i>
+                    Engines
+                </a>
+            </li>
+        </ul>
+        <ul class="nav flex-column mb-auto">
+            <li class="nav-item">
+                <a class="nav-link d-flex align-items-center gap-2 {% if request.resolver_match.view_name == 'recon:materials_connectors' %}active{% endif %}"
+                   {% if request.resolver_match.view_name == 'recon:materials_connectors' %}aria-current="page"{% endif %}
+                   href="{% url 'recon:materials_connectors' %}">
+                    <i class="ph-fill ph-barn" style="font-size: 20px;"></i>
+                    Materials
+                </a>
+            </li>
+        </ul>
+        <ul class="nav flex-column mb-auto">
+            <li class="nav-item">
+                <a class="nav-link d-flex align-items-center gap-2 {% if request.resolver_match.view_name == 'recon:sales_connectors' %}active{% endif %}"
+                   {% if request.resolver_match.view_name == 'recon:sales_connectors' %}aria-current="page"{% endif %}
+                   href="{% url 'recon:sales_connectors' %}">
+                    <i class="ph-fill ph-coins" style="font-size: 20px;"></i>
+                    Sales
+                </a>
+            </li>
+        </ul>
+        <ul class="nav flex-column mb-auto">
+            <li class="nav-item">
+                <a class="nav-link d-flex align-items-center gap-2 {% if request.resolver_match.view_name == 'recon:ops_connectors' %}active{% endif %}"
+                   {% if request.resolver_match.view_name == 'recon:ops_connectors' %}aria-current="page"{% endif %}
+                   href="{% url 'recon:ops_connectors' %}">
+                    <i class="ph-fill ph-crane" style="font-size: 20px;"></i>
+                    Ops
+                </a>
+            </li>
+        </ul>
+        <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-2 text-uppercase">
+            <span>Configurations</span>
+        </h6>
+        <ul class="nav flex-column mb-auto">
+            <li class="nav-item">
+                <a class="nav-link d-flex align-items-center gap-2 {% if request.resolver_match.view_name == 'app:configsettings_list' %}active{% endif %}"
+                   {% if request.resolver_match.view_name == 'app:configsettings_list' %}aria-current="page"{% endif %}
+                   href="{% url 'app:configsettings_list' %}">
+                    <i class="ph-fill ph-wrench" style="font-size: 20px;"></i>
+                    Configs
+                </a>
+            </li>
+        </ul>
+    </ul>
+{% endblock navbar %}

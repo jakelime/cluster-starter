@@ -1,0 +1,54 @@
+<div class="modal-header">
+    <h5 class="modal-title">Details: {{ ops_record.esn|default:"-" }} - {{ ops_record.customer|default:"Unknown Customer" }}</h5>
+    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+</div>
+
+<div class="modal-body">
+    <!-- Alerts -->
+    <div id="modal-alerts">
+        {% include "common/partials/alerts.html" %}
+    </div>
+    <!-- Action Bar -->
+    <div class="d-flex justify-content-end mb-3">
+        {% if is_editing %}
+            <button class="btn btn-outline-secondary btn-sm"
+                    hx-get="{% url 'sales:detail_modal' sales_record.uuid %}"
+                    hx-target="#detailModalContent"
+                    hx-swap="innerHTML">
+                <i class="ph-fill ph-x"></i> Cancel Editing
+            </button>
+        {% else %}
+            <button class="btn btn-outline-primary btn-sm"
+                    hx-get="{% url 'sales:detail_modal' sales_record.uuid %}?mode=edit"
+                    hx-target="#detailModalContent"
+                    hx-swap="innerHTML">
+                <i class="ph-fill ph-pencil-simple"></i> Enable Editing
+            </button>
+        {% endif %}
+    </div>
+
+    <form hx-post="{% url 'sales:detail_modal' sales_record.uuid %}" hx-target="#detailModalContent">
+        {% csrf_token %}
+
+        <div class="container-fluid">
+            <!-- Sales Section -->
+            <h5 class="border-bottom pb-2 mb-3 mt-4">Sales Financials</h5>
+            {% include "common/partials/form-bootstrap5-toggle.html" with form=sales_form is_editing=is_editing request=request %}
+
+            <!-- Operations Section -->
+            {% if ops_form %}
+                <h5 class="border-bottom pb-2 mb-3 mt-2">Operations / Production Data</h5>
+                {% include "common/partials/form-bootstrap5-toggle.html" with form=ops_form is_editing=is_editing request=request %}
+            {% endif %}
+        </div>
+
+        {% if is_editing %}
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary"
+                    hx-get="{% url 'sales:detail_modal' sales_record.uuid %}"
+                    hx-target="#detailModalContent">Cancel</button>
+            <button type="submit" class="btn btn-primary">Save Changes</button>
+        </div>
+        {% endif %}
+    </form>
+</div>

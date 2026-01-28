@@ -1,0 +1,42 @@
+{% extends "recon/navbar.html" %}
+{% load crispy_forms_tags %}
+{% block content %}
+    <div class="container">
+        {% include "common/partials/title.html" %}
+        {% include "common/partials/alerts.html" %}
+    </div>
+    <div class="row py-4">
+        <div class="col-12 pb-2">
+            <h2 class="text-body-emphasis">Sales Sync</h2>
+            <p>Ingest sales input data from sales meeting excel file</p>
+        </div>
+        <div class="col-md-6">
+            <h3 class="text-body-emphasis">[Extract] File Uploads</h3>
+            <ul class="list-unstyled ps-0">
+                <li>
+                    <i class="ph-fill ph-upload"></i>
+                    <a class="icon-link mb-1"
+                       href="{% url 'recon:sales_fileupload_create' %}">New Excel file upload</a>
+                </li>
+                <li>
+                    <i class="ph-fill ph-files"></i>
+                    <a class="icon-link mb-1" href="{% url 'recon:sales_fileupload_list' %}">List of Past uploads</a>
+                </li>
+            </ul>
+        </div>
+        <div class="col-md-6">
+            <h3 class="text-body-emphasis">[Transform]</h3>
+            <ul class="list-unstyled ps-0">
+                <li>
+                    <i class="ph-fill ph-upload"></i>
+                    <a class="icon-link mb-1"
+                       href="{% url 'recon:sales_transform_action' %}">Trigger transform task</a>
+                </li>
+                <li>
+                    <i class="ph-fill ph-files"></i>
+                    <a class="icon-link mb-1" href="{% url 'recon:sales_transform_list' %}">List of Tasks</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+{% endblock content %}

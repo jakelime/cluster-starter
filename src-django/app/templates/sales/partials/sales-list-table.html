@@ -1,0 +1,4 @@
+{% load render_table from django_tables2 %}
+<div hx-boost="true" hx-target="#table-container" hx-push-url="true">
+    {% render_table table %}
+</div>

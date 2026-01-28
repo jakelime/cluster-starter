@@ -1,0 +1,15 @@
+{% extends "recon/navbar.html" %}
+{% load crispy_forms_tags %}
+{% block content %}
+    <div class="container py-4">
+        {% include "common/partials/title.html" %}
+        {% include "common/partials/alerts.html" %}
+        {% include "common/partials/form-errors.html" %}
+        <div class="row">
+            <form action="" method="post">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-primary">Trigger transform</button>
+            </form>
+        </div>
+    </div>
+{% endblock content %}

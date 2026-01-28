@@ -1,0 +1,40 @@
+{% extends "recon/navbar.html" %}
+{% load crispy_forms_tags %}
+{% block content %}
+    <div class="container my-4">
+        {% include "common/partials/title.html" %}
+        {% include "common/partials/alerts.html" %}
+        <div class="row pt-2 pb-3">
+            <div class="col-12 pb-2">
+                <h2 class="text-body-emphasis">Ops Sync</h2>
+                <p>Ingest engine production status tracking data from Production Manager internal documents</p>
+            </div>
+            <div class="col-md-6">
+                <h3 class="text-body-emphasis">[Extract] File Uploads</h3>
+                <ul class="list-unstyled ps-0">
+                    <li>
+                        <i class="ph-fill ph-upload"></i>
+                        <a class="icon-link mb-1" href="{% url 'recon:ops_fileupload_create' %}">New Excel file upload</a>
+                    </li>
+                    <li>
+                        <i class="ph-fill ph-files"></i>
+                        <a class="icon-link mb-1" href="{% url 'recon:ops_fileupload_list' %}">List of Past uploads</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="col-md-6">
+                <h3 class="text-body-emphasis">[Transform]</h3>
+                <ul class="list-unstyled ps-0">
+                    <li>
+                        <i class="ph-fill ph-upload"></i>
+                        <a class="icon-link mb-1" href="{% url 'recon:ops_transform_action' %}">Trigger transform task</a>
+                    </li>
+                    <li>
+                        <i class="ph-fill ph-files"></i>
+                        <a class="icon-link mb-1" href="{% url 'recon:ops_transform_list' %}">List of Tasks</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+{% endblock content %}

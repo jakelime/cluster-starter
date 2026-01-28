@@ -1,0 +1,21 @@
+{% extends "recon/navbar.html" %}
+{% load crispy_forms_tags %}
+{% block content %}
+  <div class="container my-4">
+    {% include "common/partials/title.html" %}
+    {% include "common/partials/alerts.html" %}
+    {% include "common/partials/form-errors.html" %}
+    <div class="row pt-2">
+      {% if object %}
+        {% if object.task_id %}
+          <div class="col-12 mb-3">
+            <a href="{{ object.get_celery_task_url }}" class="btn btn-secondary">View Celery Task Details</a>
+          </div>
+        {% else %}
+          <div class="alert alert-warning" role="alert">No associated Celery Task ID found for this Sales Update.</div>
+        {% endif %}
+      {% endif %}
+    </div>
+    <div class="row py-2">{% crispy form %}</div>
+  </div>
+{% endblock content %}

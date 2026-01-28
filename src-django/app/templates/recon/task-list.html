@@ -1,0 +1,19 @@
+{% extends "recon/navbar.html" %}
+{% load render_table from django_tables2 %}
+{% load crispy_forms_tags %}
+{% load django_bootstrap5 %}
+{% block content %}
+    <div class="container-fluid my-4">
+        {% include "common/partials/title.html" %}
+        {% include "common/partials/alerts.html" %}
+        {% include "common/partials/component-accordion.html" %}
+        <div class="row py-2">
+            <div class="me-2 d-inline-block">
+                <a href="{% url 'recon:task_refresh' %}"
+                   class="btn btn-primary"
+                   role="button">Refresh</a>
+            </div>
+        </div>
+        <div class="row py-2">{% render_table table %}</div>
+    </div>
+{% endblock content %}

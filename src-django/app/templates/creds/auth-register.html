@@ -1,0 +1,14 @@
+{% extends "creds/navbar.html" %}
+{% load crispy_forms_tags %}
+{% block content %}
+    <div class="container my-4">
+        <div class="row col-8 pt-4 pb-2">
+            <h1>Registration</h1>
+        </div>
+        {% include "common/partials/form-errors.html" %}
+        <div class="row col-8">{% crispy form %}</div>
+        <div class="row col-8">
+            <small><i>Already have an account? Login <a href={% url 'creds:login' %}>here</a></i></small>
+        </div>
+    </div>
+{% endblock content %}

@@ -1,0 +1,25 @@
+{% extends "common/dashboard-navbar.html" %}
+{% load crispy_forms_tags %}
+{% block content %}
+    <div class="container my-4">
+        {% include "common/partials/title.html" %}
+        {% include "common/partials/alerts.html" %}
+        {% include "common/partials/form-errors.html" %}
+        <div class="row pt-2 pb-4">
+            <div class="col-12">
+                <div class="btn-group">
+                    <a href="{{ object.get_list_url }}" class="btn btn-secondary fw-bold">Back to list</a>
+                    <a href="{{ object.get_update_url }}"
+                       type="button"
+                       class="btn btn-outline-primary fw-bold">Update</a>
+                    <a href="{{ object.get_delete_url }}"
+                       type="button"
+                       class="btn btn-outline-danger fw-bold">DELETE</a>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12">{% crispy form %}</div>
+        </div>
+    </div>
+{% endblock content %}
