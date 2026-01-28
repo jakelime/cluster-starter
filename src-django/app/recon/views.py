@@ -739,3 +739,109 @@ class OpsTransformListView(
             "-dt_created"
         )
         return queryset
+
+
+class HelloView(TemplateView):
+    template_name = "recon/hello.html"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["page_title"] = "Engines Connectors"
+        return context
+
+
+class HelloListView(
+    LoginRequiredMixin,
+    PermissionRequiredMixin,
+    SingleTableMixin,
+    FilterView,
+):
+    model = models.HelloModel
+    table_class = apptables.HelloActionTable
+    filterset_class = appfilters.HelloListFilter
+    template_name = "recon/hello-list.html"
+    context_object_name = "report"
+    permission_required = ["recon.view_hellomodel"]
+
+    def get_queryset(self):
+        queryset = self.model.objects.filter(
+            Q(is_deleted=False) & ~Q(status=CRS.CLOSED)
+        ).order_by("-dt_created")
+        return queryset
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["page_title"] = "Hello Objects"
+        return context
+
+
+class HelloDeleteView(
+    LoginRequiredMixin,
+    PermissionRequiredMixin,
+    UpdateView,
+):
+    model = models.HelloModel
+    template_name = "recon/hello-delete-confirm.html"
+    fields = ["is_deleted"]
+    success_url = reverse_lazy("recon:zmmr3010_list")
+    permission_required = ["recon.delete_hellomodel"]
+
+    def form_valid(self, form):
+        form.instance.is_deleted = True
+        return super().form_valid(form)
+
+
+class HelloCreateView(
+    LoginRequiredMixin,
+    PermissionRequiredMixin,
+    CreateView,
+):
+    model = models.HelloModel
+    form_class = appforms.HelloAddForm
+    template_name = "recon/hello-add.html"
+    form_object = None
+    permission_required = ["recon.add_hellomodel"]
+
+    def get_success_url(self):
+        if self.form_object:
+            return reverse("recon:hello_load", kwargs={"pk": self.form_object.pk})
+        return reverse("recon:hello_list")
+
+    def form_valid(self, form):
+        record = form.save(commit=False)
+        record.user_created = self.request.user
+        record.status = CRS.NEW
+        record.save()
+        self.form_object = record
+        return super().form_valid(form)
+
+    def form_invalid(self, form: BaseModelForm) -> HttpResponse:
+        for field, errors in form.errors.items():
+            for error in errors:
+                messages.error(self.request, f"Invalid field({field}): {error}")
+        return super().form_invalid(form)
+
+
+class HelloUpdateView(
+    LoginRequiredMixin,
+    PermissionRequiredMixin,
+    UpdateView,
+):
+    model = models.HelloModel
+    form_class = appforms.HelloChangeForm
+    template_name = "recon/hello-change.html"
+    permission_required = ["recon.change_hellomodel"]
+
+    def get_success_url(self):
+        return reverse("recon:hello_list")
+
+    def form_invalid(self, form: BaseModelForm) -> HttpResponse:
+        for field, errors in form.errors.items():
+            for error in errors:
+                messages.error(self.request, f"Invalid field({field}): {error}")
+        return super().form_invalid(form)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["page_title"] = "Update Hello Object"
+        return context

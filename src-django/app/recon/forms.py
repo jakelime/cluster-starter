@@ -373,3 +373,70 @@ class OpsFileUploadUpdateForm(ModelForm):
             _field = self.fields.get(name)
             if _field:
                 _field.disabled = True
+
+
+class HelloAddForm(ModelForm):
+    helper = FormHelper()
+    helper.help_text_inline = True
+    layout_elements = [
+        Fieldset(
+            "Upload Hello File",
+            Div(CssMFieldMedium("name"), css_class="row gx-5"),
+            Div(CssMFieldMedium("input_fpath"), css_class="row gx-5"),
+            css_class="mb-3",
+        ),
+        Div(
+            FormActions(
+                Submit(
+                    "submit",
+                    "Submit",
+                    css_class="btn btn-primary btn-block p-2",
+                ),
+            ),
+            css_class="py-2",
+        ),
+    ]
+    helper.layout = Layout(*layout_elements)
+
+    class Meta:
+        model = models.HelloModel
+        fields = ("name", "input_fpath")
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        name = self.fields.get("name")
+        if name:
+            name.help_text = "Give a unique name, or leave this empty."
+
+
+class HelloChangeForm(ModelForm):
+    helper = FormHelper()
+    helper.help_text_inline = True
+    layout_elements = [
+        Fieldset(
+            "Update Attributes",
+            Div(CssMFieldLarge("name"), css_class="row gx-5"),
+            css_class="p-3",
+        ),
+        Div(
+            FormActions(
+                Submit(
+                    "submit",
+                    "Submit",
+                    css_class="btn btn-primary btn-block p-2",
+                ),
+            ),
+            css_class="py-2",
+        ),
+    ]
+    helper.layout = Layout(*layout_elements)
+
+    class Meta:
+        model = models.HelloModel
+        fields = ("name", "input_fpath")
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        name = self.fields.get("name")
+        if name:
+            name.help_text = "Give a unique name, or leave this empty."

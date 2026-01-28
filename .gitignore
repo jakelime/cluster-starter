@@ -12,6 +12,10 @@ venv.bak/
 
 !**/.env.example
 
+## Secrets
+
+src-django/db_helpers/*/secrets.toml
+
 
 ## src-nginx
 ./src-nginx/certs/

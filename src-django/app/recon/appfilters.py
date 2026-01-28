@@ -48,3 +48,15 @@ class OpsFileUploadFilter(FilterSet):
             "dt_created": ["lt", "gt"],
             "status": ["icontains"],
         }
+
+
+class HelloListFilter(FilterSet):
+    class Meta:
+        model = models.HelloModel
+        fields = {
+            "name": ["icontains"],
+            "task_id": ["icontains"],
+            "user_created__username": ["icontains"],
+            "dt_created": ["lt", "gt"],
+            "status": ["icontains"],
+        }

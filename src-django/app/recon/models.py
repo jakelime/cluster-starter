@@ -15,6 +15,7 @@ lg = logging.getLogger("django")
 MATR_CONF = settings.MATR_CONF
 SALES_CONF = settings.SALES_CONF
 OPS_CONF = settings.OPS_CONF
+HELLO_CONF = settings.HELLO_CONF
 
 UserModel = get_user_model()
 
@@ -280,3 +281,40 @@ class OpsFileUploadModel(FileUploadModel):
 
 class OpsTransformModel(TaskAbstractModel):
     rows_transformed = models.IntegerField(default=0)
+
+
+class HelloModel(FileUploadModel):
+    name = models.CharField(max_length=256, unique=False, null=True, blank=True)
+
+    input_fpath = models.FileField(
+        blank=False,
+        null=True,
+        max_length=2048,
+        upload_to=MATR_CONF.INPUT_DIRNAME_ZMMR3010,
+        validators=[
+            FileExtensionValidator(allowed_extensions=HELLO_CONF.INPUT_ALLOWED_EXTENSIONS)
+        ],
+    )
+
+    def __str__(self):
+        try:
+            return f"{self.__class__.__name__}({self.name}, {self.dt_created.strftime('%Y%m%d_%H%MH')})"
+        except AttributeError:
+            return f"{self.__class__.__name__}(AttributeError: pk={self.pk})"
+
+    def get_delete_url(self):
+        raise NotImplementedError()
+
+    def get_update_url(self):
+        raise NotImplementedError()
+
+    def save(self, *args, **kwargs):
+        if not self.name:
+            try:
+                path = Path(self.input_fpath.path)
+                self.name = path.name
+                self.name = self.name.strip().replace(" ", "").lower()
+            except Exception as e:
+                lg.warning(f"error saving HelloWorldModel; {e=}")
+
+        super().save(*args, **kwargs)

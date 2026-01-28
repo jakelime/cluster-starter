@@ -153,4 +153,7 @@ urlpatterns = [
         views.OpsConnectorsView.as_view(),
         name="ops_connectors",
     ),
+    path("hello/", views.HelloView.as_view(), name="hello"),
+    path("hello/create", views.HelloCreateView.as_view(), name="hello_add"),
+    path("hello/list", views.HelloListView.as_view(), name="hello_list"),
 ]

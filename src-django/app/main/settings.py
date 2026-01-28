@@ -11,6 +11,7 @@ from dotenv import load_dotenv
 from main.settings_matr import MaterialsControllerConfig
 from main.settings_sales import SalesControllerConfig
 from main.settings_ops import OpsControllerConfig
+from main.settings_hello import HelloConfig
 from main.utils import get_boolean_env_var, parse_mongo_uri
 
 load_dotenv()
@@ -380,3 +381,4 @@ FORM_RENDERER = "django.forms.renderers.TemplatesSetting"
 MATR_CONF = MaterialsControllerConfig(media_root=MEDIA_ROOT)
 SALES_CONF = SalesControllerConfig(media_root=MEDIA_ROOT)
 OPS_CONF = OpsControllerConfig(media_root=MEDIA_ROOT)
+HELLO_CONF = HelloConfig(media_root=MEDIA_ROOT)
