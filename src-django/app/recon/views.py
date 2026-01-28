@@ -25,6 +25,35 @@ lg = logging.getLogger("django")
 MATR_CONF = settings.MATR_CONF
 
 
+def load_hello_task_view(request, pk: str):
+    record_for_display = get_object_or_404(models.HelloModel, pk=pk)
+    runnable_statuses = [
+        CRS.NEW,
+        CRS.FAILED,  # Allow retrying a failed task
+    ]
+    updated_count = models.HelloModel.objects.filter(
+        pk=pk, status__in=runnable_statuses
+    ).update(status=CRS.QUEUED)  # Set status to QUEUED
+    if updated_count == 0:
+        messages.warning(
+            request,
+            f"Task for '{record_for_display.input_fpath.name}' is already in progress.",
+        )
+        return redirect(reverse("recon:hello_list"))
+
+    # If we're here, updated_count was 1. We successfully claimed the task!
+    # Now we can safely queue the Celery task.
+    pk_str = str(pk)  # Keep doing this, it's correct for serialization
+    lg.info(f"Queueing task for Hello object with {pk_str=}")
+    # We set a countdown to allow time for file upload to complete writing to disk.
+    tasks.extract_hello.apply_async((pk_str,), countdown=0)
+    messages.success(
+        request,
+        f"Task for '{record_for_display.input_fpath.name}' has been successfully queued.",
+    )
+    return redirect(reverse("recon:hello_list"))
+
+
 def load_zmmr3010_task_view(request, pk: str):
     record_for_display = get_object_or_404(models.Zmmr3010ReportModel, pk=pk)
     runnable_statuses = [
@@ -783,7 +812,7 @@ class HelloDeleteView(
     model = models.HelloModel
     template_name = "recon/hello-delete-confirm.html"
     fields = ["is_deleted"]
-    success_url = reverse_lazy("recon:zmmr3010_list")
+    success_url = reverse_lazy("recon:hello_list")
     permission_required = ["recon.delete_hellomodel"]
 
     def form_valid(self, form):

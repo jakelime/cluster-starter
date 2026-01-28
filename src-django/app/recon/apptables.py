@@ -299,6 +299,7 @@ class HelloActionTable(djt.Table):
             "name",
             "user_created",
             "status",
+            "data",
             "processing_time",
         )
 
@@ -326,6 +327,6 @@ class HelloActionTable(djt.Table):
     def render_delete_action(self, record):
         return format_html(
             '<a href="{}" class="btn btn-sm btn-danger">Delete</a>',
-            reverse("recon:zmmr3010_delete", kwargs={"pk": record.pk}),
+            reverse("recon:hello_delete", kwargs={"pk": record.pk}),
             record.pk,
         )

@@ -1,7 +1,7 @@
 
 # Upstream application servers
 upstream app1_servers {
-    server app1:${APP1_PORT};
+    server django:${DJANGO_PORT};
 }
 
 # Server block for HTTP traffic

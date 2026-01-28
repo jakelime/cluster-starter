@@ -29,11 +29,45 @@ from recon.models import (
     SalesFileUploadModel,
     SalesTransformModel,
     Zmmr3010ReportModel,
+    HelloModel,
 )
 
 cf = ConfigHelper()
 config = cf.config
 lg = logging.getLogger("django")
+
+
+@shared_task(bind=True)
+def extract_hello(self, pk: str) -> str:
+    record = None
+    try:
+        record = get_object_or_404(HelloModel, pk=pk)
+        # Check if the file exists before proceeding
+        record.task_id = self.request.id
+        record.dt_start = timezone.now()
+        record.status = CRS.RUNNING
+        record.save(update_fields=["status", "task_id", "dt_start"])
+
+        fpath = check_file_exists(Path(record.input_fpath.path))
+        content = fpath.read_text(encoding="utf-8")
+        record.data = content
+        record.save(update_fields=["data"])
+
+        record.status = CRS.DONE
+        record.dt_end = timezone.now()
+        record.processing_time = record.calculate_processing_time()
+        record.save(
+            update_fields=["status", "dt_end", "processing_time", "output_fpath"]
+        )
+        results = f"hello world!({pk=}) done."
+    except Exception as e:
+        if record:
+            record.status = CRS.FAILED
+            record.save(update_fields=["status"])
+        results = f"extract_hello({pk=}) failed:, error={e}"
+        lg.error(results)
+
+    return results
 
 
 @retry_on_exception(

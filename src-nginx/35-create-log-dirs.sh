@@ -6,13 +6,11 @@ set -e
 # Configuration with Defaults
 # ---------------------------
 # Syntax: ${VAR:-default_value}
-LOGS_VOL="${SHARED_LOGS_DIR:-/applogs}"
-
-applogs_dir="${LOGS_VOL}/nginx"
+NGINX_LOG_FOLDER="${NGINX_LOG_FOLDER:-/applogs/nginx}"
 nginx_user="${NGINX_USER:-nginx:nginx}"
 
 echo "Starting nginx logs directory initialization..."
-echo "Applogs folder: $applogs_dir"
+echo "Applogs folder: $NGINX_LOG_FOLDER"
 
 # Function to ensure directory exists and has correct ownership
 ensure_dir() {
@@ -28,6 +26,6 @@ ensure_dir() {
 }
 
 # Run setup
-ensure_dir "$applogs_dir"
+ensure_dir "$NGINX_LOG_FOLDER"
 
 echo "nginx logs dir init done."

@@ -155,5 +155,20 @@ urlpatterns = [
     ),
     path("hello/", views.HelloView.as_view(), name="hello"),
     path("hello/create", views.HelloCreateView.as_view(), name="hello_add"),
+    path(
+        "hello/<str:pk>/update/",
+        views.HelloUpdateView.as_view(),
+        name="hello_change",
+    ),
+    path(
+        "hello/<str:pk>/delete/",
+        views.HelloDeleteView.as_view(),
+        name="hello_delete",
+    ),
     path("hello/list", views.HelloListView.as_view(), name="hello_list"),
+    path(
+        "fileuploads/hello/<str:pk>/load/",
+        views.load_hello_task_view,
+        name="hello_load",
+    ),
 ]

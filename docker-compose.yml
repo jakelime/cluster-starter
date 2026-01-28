@@ -11,7 +11,7 @@ services:
       - NGINX_ENVSUBST_TEMPLATE_DIR=/etc/nginx/templates
       - NGINX_ENVSUBST_OUTPUT_DIR=/etc/nginx/conf.d
       - SHARED_DATA_DIR=${SHARED_DATA_DIR}
-      - SHARED_LOGS_DIR=${SHARED_LOGS_DIR}
+      - NGINX_LOG_FOLDER=${SHARED_LOGS_DIR}/nginx/
       - NGINX_STATIC_FOLDER=${SHARED_DATA_DIR}/www/static/
       - NGINX_MEDIA_FOLDER=${SHARED_DATA_DIR}/www/media/
       - NGINX_PORT_HTTP=${NGINX_PORT_HTTP}
@@ -22,7 +22,7 @@ services:
       - "${NGINX_PORT_HTTPS}:${NGINX_PORT_HTTPS}"
     volumes:
       - ./src-nginx/templates:/etc/nginx/templates
-      - appdata:${SHARED_DATA_DIR}
+      - datashare:${SHARED_DATA_DIR}
       - applogs:${SHARED_LOGS_DIR}
       - cache_nginx:/var/cache/nginx
     networks:
@@ -67,15 +67,55 @@ services:
     # --save: save DB snapshot if <keys: 1> change in <seconds: 60>
     # --dir /data: saves data to mountpoint
     command: valkey-server --save 60 1 --loglevel warning --dir /data
-    ports:
-      - "${VALKEY_PORT}:${VALKEY_PORT}"
+    # ports:
+    #   - "${VALKEY_PORT}:${VALKEY_PORT}"
     volumes:
       - dbdata_valkey:/data
     networks:
       - appnet
 
+  django:
+    container_name: ${PROJECT_NAME}_django
+    restart: unless-stopped
+    env_file:
+      - ./src-django/.env.docker
+    build:
+      context: ./src-django
+      args:
+        url_pypi: ${url_pypi_index}
+        url_docker: ${url_docker_index}
+    volumes:
+      ## Maps host dir, mount into to container vol
+      - datashare:/datashare
+      - applogs:/applogs
+    networks:
+      - appnet
+    entrypoint:
+      - bash
+      - entrypoint-gunicorn.sh
+      - ${DJANGO_PORT}
+
+  worker:
+    restart: unless-stopped
+    container_name: ${PROJECT_NAME}_worker
+    build:
+      context: ./src-django
+      args:
+        url_pypi: ${url_pypi_index}
+        url_docker: ${url_docker_index}
+    env_file:
+      - ./src-django/.env.docker
+    volumes:
+      - datashare:/datashare
+      - applogs:/applogs
+    entrypoint:
+      - bash
+      - entrypoint-celery.sh
+    networks:
+      - appnet
+
 volumes:
-  appdata:
+  datashare:
   applogs:
   dbdata_mgdb:
   dbdata_valkey:

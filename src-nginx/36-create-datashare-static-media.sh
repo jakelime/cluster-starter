@@ -6,8 +6,8 @@ set -e
 # Configuration with Defaults
 # ---------------------------
 # Syntax: ${VAR:-default_value}
-static_folder="${NGINX_STATIC_FOLDER:-/appdata/www/static}"
-media_folder="${NGINX_MEDIA_FOLDER:-/appdata/www/media}"
+static_folder="${NGINX_STATIC_FOLDER:-/datashare/www/static}"
+media_folder="${NGINX_MEDIA_FOLDER:-/datashare/www/media}"
 nginx_user="${NGINX_USER:-nginx:nginx}"
 
 echo "Starting nginx data directory initialization..."

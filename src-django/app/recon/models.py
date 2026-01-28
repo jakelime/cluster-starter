@@ -292,9 +292,13 @@ class HelloModel(FileUploadModel):
         max_length=2048,
         upload_to=MATR_CONF.INPUT_DIRNAME_ZMMR3010,
         validators=[
-            FileExtensionValidator(allowed_extensions=HELLO_CONF.INPUT_ALLOWED_EXTENSIONS)
+            FileExtensionValidator(
+                allowed_extensions=HELLO_CONF.INPUT_ALLOWED_EXTENSIONS
+            )
         ],
     )
+
+    data = models.TextField(null=True, blank=True)
 
     def __str__(self):
         try:
