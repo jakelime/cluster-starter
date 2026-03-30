@@ -7,8 +7,8 @@
 # and then starts the Valkey server with that configuration.
 
 # --- Configuration ---
-: ${VALKEY_PORT:=6379}
-: ${VALKEY_PASSWORD:="v3rhsYtVfHG7AVKSKZK"}
+: ${VALKEY_PORT:=23502}
+: ${VALKEY_PASSWORD:="orhP38H1Vm8aVmgaF6bqEf"}
 
 CONFIG_DIR="/usr/local/etc/valkey"
 CONFIG_FILE="$CONFIG_DIR/valkey.conf"
