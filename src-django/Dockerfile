@@ -6,10 +6,11 @@ ARG url_pypi
 ENV url_pypi=${url_pypi}
 
 WORKDIR /app
-COPY ./app/ ./
 
 COPY requirements.txt ./
 RUN pip install -r ./requirements.txt --index-url ${url_pypi}
 
+COPY .env ./
+COPY ./app/ ./
 RUN chmod +x entrypoint-gunicorn.sh
 RUN chmod +x entrypoint-celery.sh

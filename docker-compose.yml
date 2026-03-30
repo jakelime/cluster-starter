@@ -82,8 +82,6 @@ services:
   django:
     container_name: ${PROJECT_NAME}_django
     restart: unless-stopped
-    env_file:
-      - ./src-django/.env
     build:
       context: ./src-django
       args:
