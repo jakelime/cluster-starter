@@ -56,19 +56,17 @@ services:
   valkey:
     restart: unless-stopped
     container_name: ${PROJECT_NAME}_valkey
-    env_file:
-      - ./src-valkey/.env
     build:
       context: ./src-valkey
       args:
         url_docker: ${url_docker_index}
-        port_valkey: ${VALKEY_PORT}
+        port_valkey: ${VALKEY_PORT:-27002}
     # Enable persistance:
     # --save: save DB snapshot if <keys: 1> change in <seconds: 60>
     # --dir /data: saves data to mountpoint
     command: valkey-server --save 60 1 --loglevel warning --dir /data
-    # ports:
-    #   - "${VALKEY_PORT}:${VALKEY_PORT}"
+    ports:
+      - "${VALKEY_PORT:-27002}:${VALKEY_PORT:-27002}"
     volumes:
       - dbdata_valkey:/data
     networks:
