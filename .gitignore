@@ -9,9 +9,12 @@ venv/
 ENV/
 env.bak/
 venv.bak/
+.env.*
+!.env.example
 
 !**/.env.example
-
+!**/.env
+!.env
 ## Secrets
 
 src-django/db_helpers/*/secrets.toml
@@ -312,10 +315,7 @@ web_modules/
 # Yarn Integrity file
 .yarn-integrity
 
-# dotenv environment variable files
-.env
-.env.*
-!.env.example
+
 # parcel-bundler cache (https://parceljs.org/)
 .cache
 .parcel-cache
