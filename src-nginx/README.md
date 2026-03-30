@@ -65,7 +65,7 @@ services:
     restart: unless-stopped
     container_name: ${PROJECT_NAME}_app0
     env_file:
-      - ./src-app0/.env.docker
+      - ./src-app0/.env
     build:
       context: ./src-app0
       args:
@@ -90,7 +90,7 @@ services:
     restart: unless-stopped
     container_name: ${PROJECT_NAME}_app1
     env_file:
-      - ./src-app1/.env.docker
+      - ./src-app1/.env
     build:
       context: ./src-app1
       args:
@@ -115,7 +115,7 @@ services:
     restart: unless-stopped
     container_name: ${PROJECT_NAME}_app2
     env_file:
-      - ./src-app2/.env.docker
+      - ./src-app2/.env
     build:
       context: ./src-app2
       args:

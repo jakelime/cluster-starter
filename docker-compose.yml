@@ -78,7 +78,7 @@ services:
     container_name: ${PROJECT_NAME}_django
     restart: unless-stopped
     env_file:
-      - ./src-django/.env.docker
+      - ./src-django/.env
     build:
       context: ./src-django
       args:
@@ -104,7 +104,7 @@ services:
         url_pypi: ${url_pypi_index}
         url_docker: ${url_docker_index}
     env_file:
-      - ./src-django/.env.docker
+      - ./src-django/.env
     volumes:
       - datashare:/datashare
       - applogs:/applogs
