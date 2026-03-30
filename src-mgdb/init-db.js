@@ -11,20 +11,25 @@
 // const user_root = process.env.MONGODB_INITDB_ROOT_USERNAME;
 // const user_root_pwd = process.env.MONGODB_INITDB_ROOT_PASSWORD;
 
-const user_dbadmin = process.env.MONGODB_ADMIN_DBADMIN;
-const user_dbadmin_pwd = process.env.MONGODB_ADMIN_DBADMIN_PASSWORD;
+const user_dbadmin = process.env.MONGODB_ADMIN_DBADMIN || "defaultrootuser";
+const user_dbadmin_pwd =
+  process.env.MONGODB_ADMIN_DBADMIN_PASSWORD || "HdPRb3HKf5U6Jyq2JOQ9";
 
-const db_name1 = process.env.MONGODB_DB_NAME1;
-const user_app1 = process.env.MONGODB_USER_APP1;
-const user_app1_pwd = process.env.MONGODB_USER_APP1_PASSWORD;
-const user_reader1 = process.env.MONGODB_USER_READER1;
-const user_reader1_pwd = process.env.MONGODB_USER_READER1_PASSWORD;
+const db_name1 = process.env.MONGODB_DB_NAME1 || "djangodb";
+const user_app1 = process.env.MONGODB_USER_APP1 || "appuser";
+const user_app1_pwd =
+  process.env.MONGODB_USER_APP1_PASSWORD || "UkUIklEjPROEklUNhgWr";
+const user_reader1 = process.env.MONGODB_USER_READER1 || "appreader";
+const user_reader1_pwd =
+  process.env.MONGODB_USER_READER1_PASSWORD || "H1sPawDMQzoDXM9i";
 
-const db_name2 = process.env.MONGODB_DB_NAME2;
-const user_app2 = process.env.MONGODB_USER_APP2;
-const user_app2_pwd = process.env.MONGODB_USER_APP2_PASSWORD;
-const user_reader2 = process.env.MONGODB_USER_READER2;
-const user_reader2_pwd = process.env.MONGODB_USER_READER2_PASSWORD;
+const db_name2 = process.env.MONGODB_DB_NAME2 || "defaultdb2";
+const user_app2 = process.env.MONGODB_USER_APP2 || "defaultappuser2";
+const user_app2_pwd =
+  process.env.MONGODB_USER_APP2_PASSWORD || "04D3dDgsHbTqhbOXirC";
+const user_reader2 = process.env.MONGODB_USER_READER2 || "defaultreaderuser2";
+const user_reader2_pwd =
+  process.env.MONGODB_USER_READER2_PASSWORD || "epv6nb8C5TBFGFuLTRo0";
 
 const default_collection =
   process.env.DEFAULT_COLLECTION || "default_collection";

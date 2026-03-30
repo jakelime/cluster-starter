@@ -35,9 +35,16 @@ services:
       context: ./src-mgdb
       args:
         url_docker: ${url_docker_index}
-    env_file:
-      - ./src-mgdb/.env
-    command: [ "--bind_ip", "0.0.0.0", "--port", "${MGDB_PORT}", "--quiet", "--wiredTigerCacheSizeGB", "3.5" ]
+    command:
+      [
+        "--bind_ip",
+        "0.0.0.0",
+        "--port",
+        "${MGDB_PORT}",
+        "--quiet",
+        "--wiredTigerCacheSizeGB",
+        "3.5",
+      ]
     ports:
       - "${MGDB_PORT}:${MGDB_PORT}"
     volumes:
@@ -119,8 +126,5 @@ volumes:
   dbdata_valkey:
   cache_nginx:
 
-
 networks:
   appnet:
-
-
