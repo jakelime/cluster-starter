@@ -45,8 +45,22 @@ services:
         "--wiredTigerCacheSizeGB",
         "3.5",
       ]
+    healthcheck:
+      test:
+        [
+          "CMD",
+          "mongosh",
+          "--port",
+          "${MGDB_PORT:-27001}",
+          "--eval",
+          "db.adminCommand('ping')",
+        ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
     ports:
-      - "${MGDB_PORT}:${MGDB_PORT}"
+      - "${MGDB_PORT:-27001}:${MGDB_PORT:-27001}"
     volumes:
       - dbdata_mgdb:/data/db
       - ./src-mgdb/init-db.js:/docker-entrypoint-initdb.d/init-db.js:ro
@@ -87,16 +101,19 @@ services:
       args:
         url_pypi: ${url_pypi_index}
         url_docker: ${url_docker_index}
+    entrypoint:
+      - bash
+      - entrypoint-gunicorn.sh
+      - ${DJANGO_PORT:-23501}
     volumes:
       ## Maps host dir, mount into to container vol
       - datashare:/datashare
       - applogs:/applogs
     networks:
       - appnet
-    entrypoint:
-      - bash
-      - entrypoint-gunicorn.sh
-      - ${DJANGO_PORT}
+    depends_on:
+      mgdb:
+        condition: service_healthy
 
   worker:
     restart: unless-stopped
@@ -106,8 +123,6 @@ services:
       args:
         url_pypi: ${url_pypi_index}
         url_docker: ${url_docker_index}
-    env_file:
-      - ./src-django/.env
     volumes:
       - datashare:/datashare
       - applogs:/applogs
